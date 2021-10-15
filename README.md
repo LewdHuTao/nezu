@@ -7,3 +7,6 @@
 ## Disclaimer
  - please support the project by give the project star
  - please don't sell the code under any circumstances.
+ - you dont get help when trying to host your own
+
+###### © KagChi 2021 All rights reserved.
