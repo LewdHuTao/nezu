@@ -24,7 +24,7 @@ export class clientListener extends Listener {
                 if (!config.botOwners.includes(developerId?.owner?.id!)) config.botOwners.push(developerId?.owner?.id!); 
             } catch(e) {
                 if (!config.botOwners.includes(developerId?.owner?.id!)) config.botOwners.push(developerId?.owner?.id!);
-                    this.container.client.logger.info(`${green("[Client]")} ${magentaBright(`registered ${developerId?.owner?.id!} as bot owner, but failed to fetch`)}`);
+                this.container.client.logger.info(`${green("[Client]")} ${magentaBright(`registered ${developerId?.owner?.id!} as bot owner, but failed to fetch`)}`);
             }
         }
         this.container.client.user?.setActivity({
