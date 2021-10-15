@@ -1,5 +1,5 @@
 import { Snowflake } from "discord.js";
-import { NodeOptions } from "erela.js";
+import { NodeOptions } from "shoukaku/types/Constants";
 
 export interface configType {
     bot: {
