@@ -12,16 +12,9 @@ export class clientListener extends Listener {
     async run() {
         const developerId = await this.container.client.application?.fetch();
         if (developerId?.owner instanceof Team) {
-            for (const [ownerId] of developerId?.owner.members) {
+            for (const [ownerId, user] of developerId?.owner.members) {
                 if (!config.botOwners.includes(ownerId)) config.botOwners.push(ownerId);
-                try {
-                    const fetchedUser = await this.container.client.users.fetch(ownerId)
-                    this.container.client.logger.info(`${green("[Client]")} ${magentaBright(`registered ${fetchedUser.username} as bot owner`)}`);
-                } catch(e) {
-                    if (!config.botOwners.includes(ownerId)) config.botOwners.push(ownerId);
-                    this.container.client.logger.info(`${green("[Client]")} ${magentaBright(`registered ${ownerId} as bot owner, but failed to fetch`)}`);
-                    continue;
-                }
+                this.container.client.logger.info(`${green("[Client]")} ${magentaBright(`registered ${user.user.username} as bot owner`)}`);
                 continue;
             }
         } else if (!config.botOwners.includes(developerId?.owner?.id!)) { 
