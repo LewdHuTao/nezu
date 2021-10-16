@@ -10,7 +10,7 @@ export class GuildSetting {
     public id!: Snowflake;
 
     @Column("boolean")
-    public enableFilter: boolean = true;
+    public enableFilter = true;
 
     @Column("string")
     public prefix = "+";

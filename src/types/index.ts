@@ -1,6 +1,5 @@
 import { Snowflake } from "discord.js";
 import { NodeOptions } from "shoukaku/types/Constants";
-import { GuildDatabaseManager } from "../databases/managers/GuildDatabaseManager";
 
 export interface configType {
     bot: {

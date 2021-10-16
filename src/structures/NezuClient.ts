@@ -15,13 +15,13 @@ class NezuClient extends SapphireClient {
 
     public databases = {
         guilds: new GuildDatabaseManager()
-    }
+    };
 
     constructor() {
         super({
             fetchPrefix: async (message: Message) => {
                 const guildDatabase = await this.databases.guilds.get(message.guildId!);
-                return guildDatabase?.prefix ?? "+";
+                return guildDatabase.prefix ?? "+";
             },
             typing: true,
             baseUserDirectory: join(__dirname, ".."),
@@ -36,8 +36,8 @@ class NezuClient extends SapphireClient {
 declare module "@sapphire/framework" {
     export interface SapphireClient {
         databases: {
-            guilds: GuildDatabaseManager,
-        }
+            guilds: GuildDatabaseManager;
+        };
     }
 }
 export = new NezuClient().login();
