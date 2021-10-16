@@ -1,9 +1,9 @@
 import { CommandErrorPayload, Events, Listener, ListenerOptions } from "@sapphire/framework";
 import { ApplyOptions } from "@sapphire/decorators";
-import { red, magentaBright } from 'colorette';
+import { red, magentaBright } from "colorette";
 
 @ApplyOptions<ListenerOptions>({
-    name: Events.CommandError,
+    name: Events.CommandError
 })
 export class clientListener extends Listener {
     async run(error: Error, context: CommandErrorPayload) {

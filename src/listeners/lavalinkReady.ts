@@ -1,6 +1,6 @@
 import { Listener, ListenerOptions } from "@sapphire/framework";
 import { ApplyOptions } from "@sapphire/decorators";
-import { green, magentaBright } from 'colorette';
+import { green, magentaBright } from "colorette";
 import { Client } from "discord.js";
 
 @ApplyOptions<ListenerOptions>({

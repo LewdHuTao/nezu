@@ -11,6 +11,8 @@
   },
   "scripts": {
     "start:dev": "ts-node -r dotenv/config \"src/structures/NezuClient.ts\"",
+    "lint": "eslint . --ignore-path .gitignore --ext .ts",
+    "lint:fix": "eslint . --ignore-path .gitignore --ext .ts --fix",
     "start": "node -r dotenv/config dist",
     "compile": "tsc"
   },
@@ -29,6 +31,31 @@
     "tslib": "^2.3.1"
   },
   "devDependencies": {
-    "@types/js-yaml": "^4.0.3"
+    "@hazmi35/eslint-config": "^7.0.1",
+    "@types/js-yaml": "^4.0.3",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "eslint": "^8.0.1"
+  },
+  "eslintConfig": {
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+      "@typescript-eslint"
+    ],
+    "parserOptions": {
+      "project": "./tsconfig.json"
+    },
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended",
+      "@hazmi35/eslint-config/typescript"
+    ],
+    "rules": {
+      "sort-keys": 0,
+      "@typescript-eslint/no-non-null-asserted-optional-chain": 0,
+      "@typescript-eslint/explicit-function-return-type": 0,
+      "@typescript-eslint/explicit-member-accessibility": 0
+    },
+    "ignorePatterns": []
   }
 }

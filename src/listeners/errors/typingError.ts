@@ -1,9 +1,9 @@
 import { CommandTypingErrorPayload, Events, Listener, ListenerOptions } from "@sapphire/framework";
 import { ApplyOptions } from "@sapphire/decorators";
-import { red, magentaBright } from 'colorette';
+import { red, magentaBright } from "colorette";
 
 @ApplyOptions<ListenerOptions>({
-    name: Events.CommandTypingError,
+    name: Events.CommandTypingError
 })
 export class clientListener extends Listener {
     async run(error: Error, context: CommandTypingErrorPayload) {

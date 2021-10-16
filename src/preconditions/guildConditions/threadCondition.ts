@@ -7,7 +7,6 @@ import { ApplyOptions } from "@sapphire/decorators";
 })
 
 export abstract class threadCondition extends Precondition {
-
     public async run(message: Message) {
         const checkIsAllow = this.shouldRun(message);
         if (!checkIsAllow) return this.error({ message: "❌ | I dont have send message in that thread!" });
@@ -15,8 +14,8 @@ export abstract class threadCondition extends Precondition {
     }
 
     private shouldRun(message: Message) {
-       if(message.channel.type === "GUILD_PRIVATE_THREAD" ||  message.channel.type === "GUILD_PUBLIC_THREAD" ||  message.channel.type === "GUILD_NEWS_THREAD") return message.channel.permissionsFor(message.guild?.me!).has("SEND_MESSAGES_IN_THREADS");
-       else return true
+        if (message.channel.type === "GUILD_PRIVATE_THREAD" || message.channel.type === "GUILD_PUBLIC_THREAD" || message.channel.type === "GUILD_NEWS_THREAD") return message.channel.permissionsFor(message.guild?.me!).has("SEND_MESSAGES_IN_THREADS");
+        return true;
     }
 }
 
