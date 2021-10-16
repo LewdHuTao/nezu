@@ -22,19 +22,6 @@ class NezuClient extends SapphireClient {
         resumable: true,
         resumableTimeout: 360,
     });
-
-    login(token?: string) {
-        this._setupConflictShoukaku();
-        return super.login(token);
-    }
-
-    private _setupConflictShoukaku() {
-        this.shoukaku.on('ready',(name) => this.emit("shoukakuReady", name));
-        this.shoukaku.on('error', (name, error) => this.emit("shoukakuError", name, error));
-        this.shoukaku.on('close', (name, code, reason) => this.emit("shoukakuClose", name, code, reason));
-        this.shoukaku.on('disconnect', (name, reason) => this.emit("shoukakuDisconnect", name, reason));
-    }
-
 }
 
 export = new NezuClient().login();
