@@ -17,28 +17,28 @@
     "compile": "tsc"
   },
   "dependencies": {
-    "@discordjs/builders": "^0.6.0",
-    "@sapphire/decorators": "^3.1.1",
-    "@sapphire/discord.js-utilities": "^3.2.1-next.43153d04.0",
-    "@sapphire/framework": "^2.0.0-next.a03e29c3.0",
-    "@sapphire/plugin-logger": "^1.0.13",
-    "colorette": "^2.0.16",
-    "discord.js": "^13.2.0",
-    "dotenv": "^10.0.0",
-    "ioredis": "^4.28.0",
-    "js-yaml": "^4.1.0",
-    "mongodb": "^3.7.2",
-    "shoukaku": "^2.0.4",
-    "ts-node": "^10.3.0",
-    "tslib": "^2.3.1",
-    "typeorm": "^0.2.38"
+    "@discordjs/builders": "0.6.0",
+    "@sapphire/decorators": "3.1.1",
+    "@sapphire/discord.js-utilities": "3.2.1",
+    "@sapphire/framework": "2.0.0-pr-293.ce43166f.0",
+    "@sapphire/plugin-logger": "1.0.13",
+    "colorette": "2.0.16",
+    "discord.js": "13.2.0",
+    "dotenv": "10.0.0",
+    "ioredis": "4.28.0",
+    "js-yaml": "4.1.0",
+    "mongodb": "3.7.2",
+    "shoukaku": "2.0.4",
+    "ts-node": "10.3.0",
+    "tslib": "2.3.1",
+    "typeorm": "0.2.38"
   },
   "devDependencies": {
-    "@hazmi35/eslint-config": "^7.0.1",
-    "@types/js-yaml": "^4.0.3",
-    "@typescript-eslint/eslint-plugin": "^5.0.0",
-    "@typescript-eslint/parser": "^5.0.0",
-    "eslint": "^8.0.1"
+    "@hazmi35/eslint-config": "7.0.1",
+    "@types/js-yaml": "4.0.3",
+    "@typescript-eslint/eslint-plugin": "5.0.0",
+    "@typescript-eslint/parser": "5.0.0",
+    "eslint": "8.0.1"
   },
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
