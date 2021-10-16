@@ -9,7 +9,7 @@ on:
       - "**"
 
 jobs:
-  eslint:
+  compile:
 
     runs-on: ubuntu-latest
 
