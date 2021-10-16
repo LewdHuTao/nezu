@@ -1,7 +1,8 @@
 import { SapphireClient } from "@sapphire/framework";
-import { Intents } from "discord.js";
+import { Intents, Message } from "discord.js";
 import { join } from "path";
 import { Libraries, Shoukaku } from "shoukaku";
+import { GuildDatabaseManager } from "../databases/managers/GuildDatabaseManager";
 import { config } from "../utils/parsedConfig";
 
 class NezuClient extends SapphireClient {
@@ -12,9 +13,16 @@ class NezuClient extends SapphireClient {
         resumableTimeout: 360
     });
 
+    public databases = {
+        guilds: new GuildDatabaseManager()
+    }
+
     constructor() {
         super({
-            defaultPrefix: "+",
+            fetchPrefix: async (message: Message) => {
+                const guildDatabase = await this.databases.guilds.get(message.guildId!);
+                return guildDatabase?.prefix ?? "+";
+            },
             typing: true,
             baseUserDirectory: join(__dirname, ".."),
             caseInsensitiveCommands: true,
@@ -25,4 +33,11 @@ class NezuClient extends SapphireClient {
     }
 }
 
+declare module "@sapphire/framework" {
+    export interface SapphireClient {
+        databases: {
+            guilds: GuildDatabaseManager,
+        }
+    }
+}
 export = new NezuClient().login();

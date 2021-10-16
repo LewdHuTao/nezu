@@ -25,10 +25,13 @@
     "colorette": "^2.0.16",
     "discord.js": "^13.2.0",
     "dotenv": "^10.0.0",
+    "ioredis": "^4.28.0",
     "js-yaml": "^4.1.0",
+    "mongodb": "^3.7.2",
     "shoukaku": "^2.0.4",
     "ts-node": "^10.3.0",
-    "tslib": "^2.3.1"
+    "tslib": "^2.3.1",
+    "typeorm": "^0.2.38"
   },
   "devDependencies": {
     "@hazmi35/eslint-config": "^7.0.1",
