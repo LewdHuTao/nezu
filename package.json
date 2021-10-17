@@ -29,7 +29,7 @@
     "ioredis": "4.28.0",
     "js-yaml": "4.1.0",
     "mongodb": "3.7.2",
-    "petitio": "^1.4.0",
+    "petitio": "1.4.0",
     "shoukaku": "2.0.4",
     "ts-node": "10.3.0",
     "tslib": "2.3.1",
