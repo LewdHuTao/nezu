@@ -23,6 +23,12 @@ class NezuClient extends SapphireClient {
                 const guildDatabase = await this.databases.guilds.get(message.guildId!);
                 return guildDatabase.prefix ?? "+";
             },
+            failIfNotExists: false,
+            allowedMentions: {
+                users: [],
+                repliedUser: false,
+                roles: []
+            },
             typing: true,
             baseUserDirectory: join(__dirname, ".."),
             caseInsensitiveCommands: true,

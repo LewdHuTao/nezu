@@ -14,4 +14,11 @@ export interface configType {
     redisUsername: string;
     redisUrl: string;
     mongoDatabaseURL: string | undefined;
+    weebyToken: string;
+}
+
+export interface jsonWeebyFormatText {
+    status: number;
+    format: string;
+    output: string;
 }
