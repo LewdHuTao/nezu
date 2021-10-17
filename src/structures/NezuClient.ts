@@ -1,4 +1,5 @@
-import { SapphireClient } from "@sapphire/framework";
+import { LogLevel, SapphireClient } from "@sapphire/framework";
+import { Logger } from "@sapphire/plugin-logger";
 import { Intents, Message } from "discord.js";
 import { join } from "path";
 import { Libraries, Shoukaku } from "shoukaku";
@@ -28,6 +29,10 @@ class NezuClient extends SapphireClient {
                 users: [],
                 repliedUser: false,
                 roles: []
+            },
+            logger: {
+                level: LogLevel.Info,
+                instance: new Logger()
             },
             typing: true,
             baseUserDirectory: join(__dirname, ".."),
