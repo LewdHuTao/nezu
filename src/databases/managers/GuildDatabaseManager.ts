@@ -12,13 +12,12 @@ export class GuildDatabaseManager {
     }
 
     public async get(id: Snowflake): Promise<GuildSetting> {
-        if (this.cache.get(id)) return this.cache.get(id);
+        if (this.cache.get(id) !== undefined) return this.cache.get(id);
         const data = await this.repository.findOne({ id });
         if (!data) {
             const createdData = this.repository.create({ id });
             if (this.repository) this.cache.set(id, createdData);
             await this.repository.save(createdData);
-            if (this.cache.get(id)) return this.cache.get(id);
             return createdData;
         }
         if (this.repository) this.cache.set(id, data);
