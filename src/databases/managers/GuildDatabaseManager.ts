@@ -2,21 +2,25 @@ import { Snowflake } from "discord-api-types";
 import { getMongoRepository, MongoRepository } from "typeorm";
 import { config } from "../../utils/parsedConfig";
 import { GuildSetting } from "../entities/Guild";
-
+import { Cheshire } from 'cheshire';
 export class GuildDatabaseManager {
     public repository!: MongoRepository<GuildSetting>;
 
     public _init() {
         this.repository = getMongoRepository(GuildSetting);
     }
-
+    public cache: Cheshire<Snowflake, GuildSetting> = new Cheshire({ lifetime: config.maxDatabaseCacheLifetime }) 
     public async get(id: Snowflake): Promise<GuildSetting> {
-        const data = await this.repository.findOne({ id }, { cache: { id, milliseconds: config.maxDatabaseCacheLifetime } });
+        if(this.cache.get(id)) return this.cache.get(id);
+        const data = await this.repository.findOne({ id })
         if (!data) {
             const createdData = this.repository.create({ id });
+            if(this.repository) this.cache.set(id, createdData)
             await this.repository.save(createdData);
+            if(this.cache.get(id)) return this.cache.get(id)
             return createdData;
         }
+        if(this.repository) this.cache.set(id, data)
         return data;
     }
 
@@ -25,6 +29,7 @@ export class GuildDatabaseManager {
         // @ts-expect-error
         data[key] = value;
         await this.repository.save(data);
+        if(this.repository) this.cache.set(id, data)
         return data;
     }
 }

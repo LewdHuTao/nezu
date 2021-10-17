@@ -41,9 +41,6 @@ export class clientListener extends Listener {
             ],
             type: "mongodb",
             url: config.mongoDatabaseURL,
-            cache: {
-                duration: config.maxDatabaseCacheLifetime ?? 30000
-            },
             useUnifiedTopology: true
         }).catch((e: Error) => {
             this.container.client.logger.info(`${red("[Client]")} ${magentaBright(`caught database error: ${e.message}`)}`);
