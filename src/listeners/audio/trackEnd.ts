@@ -13,7 +13,7 @@ import { ShoukakuTrack } from "../../types";
 export class clientListener extends Listener {
     async run(player: queueManager, track: ShoukakuTrack) {
         this.container.client.logger.info(`${green("[Audio]")} ${magentaBright(`guildId ${player.textChannel.guildId} stopped playing track ${track.track}`)}`);
-
+        if(player.lastMessage) player.lastMessage.delete().catch(() => undefined);
         if (track && player.trackLoop) return player.play();
 
         if (track && player.queueLoop) {
@@ -28,10 +28,6 @@ export class clientListener extends Listener {
             return player.play();
         }
 
-        if (!player.queueTrack.length || !player.queueTrack.current) {
-            player.playing = false;
-            player.queueTrack.current = null;
-            return player.audioManager.emit("queueEnd", player, track);
-        }
+        if (!player.queueTrack.length || !player.queueTrack.current) return player.audioManager.emit("queueEnd", player, track);
     }
 }

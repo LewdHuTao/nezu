@@ -1,5 +1,7 @@
 import { GuildTextBasedChannelTypes } from "@sapphire/discord.js-utilities";
+import { Message } from "discord.js";
 import { ShoukakuPlayer } from "shoukaku";
+import { ShoukakuTrack } from "shoukaku/types/Constants";
 import { TrackEndEvent, TrackStartEvent } from "shoukaku/types/guild/ShoukakuPlayer";
 import { audioManager } from "./audioManager";
 import { queueTrack } from "./utils/queueTrack";
@@ -18,7 +20,8 @@ export class queueManager {
     public queueLoop = false;
     public trackLoop = false;
     public playing = false;
-
+    public lastMessage: Message | undefined;
+    
     public play(track?: string, options?: { noReplace?: boolean | undefined; pause?: boolean | undefined; startTime?: number | undefined; endTime?: number | undefined } | undefined) {
         if (!track && !this.queueTrack.current) throw new RangeError("There are no available track to play.");
         return this.shoukakuPlayer.playTrack(track ?? this.queueTrack.current!, options);
