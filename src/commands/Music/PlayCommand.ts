@@ -16,7 +16,7 @@ export class clientCommand extends Command {
         const userArgument = await args.restResult("string");
         const audio = await this.container.client.audioManager.handleJoin(message.member?.voice.channel!, message.channel as GuildTextBasedChannelTypes);
         const track = await this.container.client.audioManager.resolveTrack(userArgument.value!, { requester: message.author });
-        if (track?.type === "LOAD_FAILED" || track?.type === "NO_MATCHES") {
+        if (!track || track.type === "LOAD_FAILED" || track.type === "NO_MATCHES") {
             return message.channel.send({
                 embeds: [
                     new MessageEmbed()
@@ -25,7 +25,7 @@ export class clientCommand extends Command {
                 ]
             });
         }
-        if (track?.type === "PLAYLIST") {
+        if (track.type === "PLAYLIST") {
             audio.queueTrack.add(track.tracks);
             await message.channel.send({
                 embeds: [
@@ -35,7 +35,7 @@ export class clientCommand extends Command {
                 ]
             });
             if (audio?.queueTrack.totalSize === track.tracks.length) return audio?.play();
-        } else if (track?.type === "TRACK" || track?.type === "SEARCH") {
+        } else if (track.type === "TRACK" || track.type === "SEARCH") {
             await message.channel.send({
                 embeds: [
                     new MessageEmbed()
