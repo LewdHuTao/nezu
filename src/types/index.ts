@@ -1,5 +1,5 @@
-import { Snowflake } from "discord.js";
-import { NodeOptions } from "shoukaku/types/Constants";
+import { Snowflake, User } from "discord.js";
+import { Base64String, NodeOptions } from "shoukaku/types/Constants";
 
 export interface configType {
     bot: {
@@ -15,10 +15,28 @@ export interface configType {
     redisUrl: string;
     mongoDatabaseURL: string | undefined;
     weebyToken: string;
+    devmode: boolean;
 }
 
 export interface jsonWeebyFormatText {
     status: number;
     format: string;
     output: string;
+}
+
+export type lavalinkSource = "youtube" | "youtube-music" | "soundcloud";
+
+export class ShoukakuTrack {
+    requester: User | undefined;
+    track!: Base64String;
+    info!: {
+        identifier?: string;
+        isSeekable?: boolean;
+        author?: string;
+        length?: number;
+        isStream?: boolean;
+        position?: number;
+        title?: string;
+        uri?: string;
+    };
 }

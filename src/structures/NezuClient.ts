@@ -1,19 +1,19 @@
-import { LogLevel, SapphireClient } from "@sapphire/framework";
+import { ILogger, LogLevel, SapphireClient } from "@sapphire/framework";
 import { Logger } from "@sapphire/plugin-logger";
 import { Intents, Message } from "discord.js";
 import { join } from "path";
 import { Libraries, Shoukaku } from "shoukaku";
 import { GuildDatabaseManager } from "../databases/managers/GuildDatabaseManager";
+import { audioManager } from "../managers/audio/audioManager";
 import { config } from "../utils/parsedConfig";
 
 class NezuClient extends SapphireClient {
     public shoukaku = new Shoukaku(new Libraries.DiscordJS(this), config.lavalink, {
         reconnectTries: 1000,
-        moveOnDisconnect: true,
-        resumable: true,
-        resumableTimeout: 360
+        moveOnDisconnect: true
     });
 
+    public audioManager: audioManager = new audioManager(this.shoukaku, this);
     public databases = {
         guilds: new GuildDatabaseManager()
     };
@@ -31,8 +31,12 @@ class NezuClient extends SapphireClient {
                 roles: []
             },
             logger: {
-                level: LogLevel.Info,
-                instance: new Logger()
+                level: config.devmode ? LogLevel.Debug : LogLevel.Info,
+                instance: new Logger() as unknown as ILogger
+            },
+            defaultCooldown: {
+                limit: 3,
+                delay: 3000
             },
             typing: true,
             baseUserDirectory: join(__dirname, ".."),
@@ -49,6 +53,8 @@ declare module "@sapphire/framework" {
         databases: {
             guilds: GuildDatabaseManager;
         };
+        shoukaku: Shoukaku;
+        audioManager: audioManager;
     }
 }
 export = new NezuClient().login();
