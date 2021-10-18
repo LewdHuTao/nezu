@@ -13,4 +13,4 @@ shardClient.on("shardCreate", (shard: Shard) => {
     logger.info(`${colorette.green("[Shard]")} ${colorette.magentaBright(`Launched shard with Id: ${shard.id}`)}`);
 });
 
-shardClient.spawn().catch((error: Error) => console.info("Failed to spawn shard: %d", error.message));
+shardClient.spawn().catch((error: Error) => logger.info("Failed to spawn shard: %d", error.message));
