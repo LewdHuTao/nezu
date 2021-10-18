@@ -45,7 +45,6 @@ export class clientCommand extends Command {
             });
             audio.queueTrack.add(track.tracks[0]);
         }
-        audio.shoukakuPlayer.stopTrack();
         if (!audio?.shoukakuPlayer.paused && !audio?.queueTrack.size && !audio.playing) return audio?.play();
     }
 }
