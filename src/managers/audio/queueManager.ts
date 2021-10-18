@@ -21,7 +21,7 @@ export class queueManager {
     public trackLoop = false;
     public playing = false;
     public lastMessage: Message | undefined;
-    
+
     public play(track?: string, options?: { noReplace?: boolean | undefined; pause?: boolean | undefined; startTime?: number | undefined; endTime?: number | undefined } | undefined) {
         if (!track && !this.queueTrack.current) throw new RangeError("There are no available track to play.");
         return this.shoukakuPlayer.playTrack(track ?? this.queueTrack.current!, options);

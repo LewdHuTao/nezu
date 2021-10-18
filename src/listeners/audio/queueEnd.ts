@@ -13,7 +13,7 @@ export class clientListener extends Listener {
     async run(player: queueManager) {
         player.playing = false;
         player.queueTrack.current = null;
-        if(player.lastMessage) player.lastMessage.delete().catch(() => undefined);
+        if (player.lastMessage) player.lastMessage.delete().catch(() => undefined);
 
         const msg = await player.textChannel.send({
             embeds: [
