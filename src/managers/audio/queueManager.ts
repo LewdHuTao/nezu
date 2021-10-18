@@ -1,7 +1,6 @@
 import { GuildTextBasedChannelTypes } from "@sapphire/discord.js-utilities";
 import { Message } from "discord.js";
 import { ShoukakuPlayer } from "shoukaku";
-import { ShoukakuTrack } from "shoukaku/types/Constants";
 import { TrackEndEvent, TrackStartEvent } from "shoukaku/types/guild/ShoukakuPlayer";
 import { audioManager } from "./audioManager";
 import { queueTrack } from "./utils/queueTrack";
