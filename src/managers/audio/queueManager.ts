@@ -10,7 +10,7 @@ export class queueManager {
         this.shoukakuPlayer.on("start", (payload: TrackStartEvent) => {
             this.audioManager.emit("trackStart", this, this.queueTrack.current, payload);
         });
-        this.shoukakuPlayer.on("end", async (payload: TrackEndEvent) => {
+        this.shoukakuPlayer.on("end", (payload: TrackEndEvent) => {
             this.audioManager.emit("trackEnd", this, this.queueTrack.current, payload);
         });
     }
