@@ -64,7 +64,12 @@
       "@typescript-eslint/ban-ts-comment": 0,
       "@typescript-eslint/no-extraneous-class": 0,
       "@typescript-eslint/member-ordering": 0,
-      "@typescript-eslint/restrict-template-expressions": 0
+      "@typescript-eslint/restrict-template-expressions": 0,
+      "no-eq-null": 0,
+      "no-negated-condition": 0,
+      "@typescript-eslint/prefer-optional-chain": 0,
+      "@typescript-eslint/no-unsafe-argument": 0,
+      "@typescript-eslint/naming-convention": 0
     },
     "ignorePatterns": []
   }

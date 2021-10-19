@@ -25,12 +25,12 @@ export class queueManager {
 
     public async play(track?: string, options?: { noReplace?: boolean | undefined; pause?: boolean | undefined; startTime?: number | undefined; endTime?: number | undefined } | undefined) {
         if (!track && !this.queueTrack.current) throw new RangeError("There are no available track to play.");
-        if(TrackUtils.isUnresolved(this.queueTrack.current)) {
+        if (TrackUtils.isUnresolved(this.queueTrack.current)) {
             const resolvedTrack = await this.audioManager.resolveTrack(`${this.queueTrack.current?.info.title} - ${this.queueTrack.current?.info.author}`, { requester: (this.queueTrack.current as ShoukakuTrack)?.requester });
             if (!resolvedTrack) throw new RangeError("Could not resolve unresolve track, cant find same track.");
-            //@ts-ignore
-            resolvedTrack.tracks[0].requester = this.queueTrack.current.requester
-            this.queueTrack.current = resolvedTrack.tracks[0]
+            // @ts-expect-error
+            resolvedTrack.tracks[0].requester = this.queueTrack.current.requester;
+            this.queueTrack.current = resolvedTrack.tracks[0];
         }
         return this.shoukakuPlayer.playTrack(track ?? this.queueTrack.current!, options);
     }

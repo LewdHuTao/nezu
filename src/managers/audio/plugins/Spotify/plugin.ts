@@ -1,5 +1,5 @@
 import { User } from "discord.js";
-//@ts-ignore
+// @ts-expect-error
 import { ShoukakuTrackList } from "shoukaku";
 import { ShoukakuTrackList as ShoukakuTrackListType } from "shoukaku/types/Constants";
 import { lavalinkSource, ShoukakuTrack } from "../../../../types";
@@ -14,7 +14,7 @@ const check = (options?: SpotifyOptions) => {
         typeof options?.strategy !== "string"
     ) {
         throw new TypeError(
-            "Spotify option \"strategy\" must be a string.",
+            "Spotify option \"strategy\" must be a string."
         );
     }
 
@@ -24,7 +24,7 @@ const check = (options?: SpotifyOptions) => {
         !options?.clientSecret
     ) {
         throw new TypeError(
-            "Spotify option \"clientSecret\" required if strategy set to API.",
+            "Spotify option \"clientSecret\" required if strategy set to API."
         );
     }
     if (
@@ -33,15 +33,15 @@ const check = (options?: SpotifyOptions) => {
         !options?.clientId
     ) {
         throw new TypeError(
-            "Spotify option \"clientId\" required if strategy set to API.",
+            "Spotify option \"clientId\" required if strategy set to API."
         );
     }
     if (
         typeof options?.playlistPageLimit !== "undefined" &&
-        typeof options?.playlistPageLimit !== "number" 
+        typeof options?.playlistPageLimit !== "number"
     ) {
         throw new TypeError(
-            "Spotify option \"playlistPageLimit\" must be a number.",
+            "Spotify option \"playlistPageLimit\" must be a number."
         );
     }
     if (
@@ -49,7 +49,7 @@ const check = (options?: SpotifyOptions) => {
         typeof options?.albumPageLimit !== "number"
     ) {
         throw new TypeError(
-            "Spotify option \"albumPageLimit\" must be a number.",
+            "Spotify option \"albumPageLimit\" must be a number."
         );
     }
 
@@ -58,7 +58,7 @@ const check = (options?: SpotifyOptions) => {
         typeof options?.showPageLimit !== "number"
     ) {
         throw new TypeError(
-            "Spotify option \"showPageLimit\" must be a number.",
+            "Spotify option \"showPageLimit\" must be a number."
         );
     }
     if (
@@ -66,17 +66,17 @@ const check = (options?: SpotifyOptions) => {
         typeof options?.maxCacheLifeTime !== "number"
     ) {
         throw new TypeError(
-            "Spotify option \"maxCacheLifeTime\" must be a number.",
+            "Spotify option \"maxCacheLifeTime\" must be a number."
         );
     }
-}
+};
 
 export class Spotify extends Plugin {
-    public name = "Spotify"
-    public readonly resolver = new resolver(this)
+    public name = "Spotify";
+    public readonly resolver = new resolver(this);
     public spotifyMatch = /(?:https:\/\/open\.spotify\.com\/|spotify:)(?:.+)?(track|playlist|artist|episode|show|album)[\/:]([A-Za-z0-9]+)/;
 
-    
+
     private _resolveTrack!: (query: string, { requester, source }: { requester?: User; source?: lavalinkSource }) => Promise<ShoukakuTrackList | null>;
     private readonly functions = {
         track: this.resolver.getTrack,
@@ -86,34 +86,35 @@ export class Spotify extends Plugin {
         show: this.resolver.getShow,
         episode: this.resolver.getEpisode
     };
+
     public audioManager: audioManager | undefined;
     public constructor(public options?: SpotifyOptions) {
         super();
         check(options);
         this.options = {
-            ...options,
+            ...options
         };
         if (this.options?.strategy === "API") {
-            this.resolver.renew()
+            void this.resolver.renew();
         }
     }
-    
-    public async load(audioManager: audioManager) { 
+
+    public async load(audioManager: audioManager) {
         this.audioManager = audioManager;
         this._resolveTrack = audioManager.resolveTrack.bind(audioManager);
         audioManager.resolveTrack = this.resolveTrack.bind(this);
     }
 
     private async resolveTrack(query: string, { requester, source }: { requester?: User; source?: lavalinkSource }): Promise<ShoukakuTrackList | null> {
-        const [ , type, id ] = query.match(this.spotifyMatch) ?? [];
+        const [, type, id] = query.match(this.spotifyMatch) ?? [];
         if (type in this.functions) {
             try {
-                const func = this.functions[type as keyof Spotify['functions']];
+                const func = this.functions[type as keyof Spotify["functions"]];
                 if (func) {
                     const data: Result = await func.fetch(query, id);
                     const loadType = type === "track" || type === "episode" ? "TRACK_LOADED" : "PLAYLIST_LOADED";
                     const name = ["playlist", "album", "artist", "episode", "show"].includes(type) ? data.name : null;
-                    const trackResult = new ShoukakuTrackList({ loadType, playlistInfo: { name } , tracks: data.tracks }) as ShoukakuTrackListType
+                    const trackResult = new ShoukakuTrackList({ loadType, playlistInfo: { name }, tracks: data.tracks }) as ShoukakuTrackListType;
                     if (trackResult && (trackResult.type === "TRACK" || trackResult.type === "PLAYLIST" || trackResult.type === "SEARCH")) {
                         trackResult.tracks = trackResult.tracks.map(x => {
                             (x as ShoukakuTrack).requester = requester;
@@ -122,9 +123,9 @@ export class Spotify extends Plugin {
                     }
                     return trackResult;
                 }
-                return null
+                return null;
             } catch (e) {
-                return null
+                return null;
             }
         }
         return this._resolveTrack(query, { requester, source });

@@ -2,14 +2,14 @@ import { ArtistsEntity } from "spotify-url-info";
 import { UnresolvedShoukakuTrack } from "../../../../../types";
 
 export interface SpotifyOptions {
-    strategy?: Strategy,
-    clientSecret?: string,
-    clientId?: string,
-    cacheTrack?: boolean,
-    showPageLimit?: number,
-    playlistPageLimit?: number,
-    albumPageLimit?: number,
-    maxCacheLifeTime?: number,
+    strategy?: Strategy;
+    clientSecret?: string;
+    clientId?: string;
+    cacheTrack?: boolean;
+    showPageLimit?: number;
+    playlistPageLimit?: number;
+    albumPageLimit?: number;
+    maxCacheLifeTime?: number;
 }
 
 export interface Playlist {
@@ -38,21 +38,21 @@ export interface PlaylistTracks {
 export interface SearchResult {
     exception?: {
         severity: string;
-        message: string
+        message: string;
     } | null;
     loadType: string;
     playlistInfo?: {
         selectedTrack: number;
-        name: string
+        name: string;
     } | null;
-    tracks: UnresolvedShoukakuTrack[]
+    tracks: UnresolvedShoukakuTrack[];
 }
 export interface UnresolvedSpotifyTrack {
     info: {
-        title: string,
-        author: string,
-        length: number,
-    }
+        title: string;
+        author: string;
+        length: number;
+    };
 }
 export type Strategy = "SCRAPE" | "API";
 
@@ -64,16 +64,16 @@ export interface SpotifyTrack {
     external_urls: {
         spotify: string;
     };
-    images: spotifyThumbnail[]
+    images: spotifyThumbnail[];
     album: {
-        images: spotifyThumbnail[]
-    }
+        images: spotifyThumbnail[];
+    };
 }
 
 export interface spotifyThumbnail {
-    height: number,
-    url: string,
-    width: number
+    height: number;
+    url: string;
+    width: number;
 }
 export interface Album {
     name: string;
@@ -87,12 +87,12 @@ export interface AlbumTracks {
 
 export interface ShowTracks {
     next: string | null;
-    items: SpotifyTrack[]
-};
+    items: SpotifyTrack[];
+}
 
 export interface Show {
-    name: string,
-    episodes: ShowTracks
+    name: string;
+    episodes: ShowTracks;
 }
 
 export interface Result {
