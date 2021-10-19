@@ -5,6 +5,7 @@ import { join } from "path";
 import { Libraries, Shoukaku } from "shoukaku";
 import { GuildDatabaseManager } from "../databases/managers/GuildDatabaseManager";
 import { audioManager } from "../managers/audio/audioManager";
+import { Bilibili } from "../managers/audio/plugins/Bilibili";
 import { config } from "../utils/parsedConfig";
 
 class NezuClient extends SapphireClient {
@@ -13,7 +14,12 @@ class NezuClient extends SapphireClient {
         moveOnDisconnect: true
     });
 
-    public audioManager: audioManager = new audioManager(this.shoukaku, this);
+    public audioManager: audioManager = new audioManager(this.shoukaku, this, {
+        plugins: [
+            new Bilibili()
+        ]
+    });
+
     public databases = {
         guilds: new GuildDatabaseManager()
     };

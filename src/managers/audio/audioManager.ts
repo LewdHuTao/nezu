@@ -6,10 +6,19 @@ import { Shoukaku } from "shoukaku";
 import { lavalinkSource, ShoukakuTrack } from "../../types";
 import { isURL } from "../../utils/isURL";
 import { queueManager } from "./queueManager";
+import { Plugin } from "./utils/Plugin";
 
 export class audioManager extends EventEmitter {
-    public constructor(public shoukaku: Shoukaku, public client: SapphireClient) {
+    public plugins: Plugin[] | undefined;
+    public constructor(public shoukaku: Shoukaku, public client: SapphireClient, { plugins }: { plugins?: Plugin[] }) {
         super();
+        if (plugins) {
+            for (const [index, plugin] of plugins.entries()) {
+                if (!(plugin instanceof Plugin)) { throw new RangeError(`Plugin at index ${index} does not extend Plugin.`); }
+                plugin.load(this);
+            }
+        }
+        this.plugins = plugins;
     }
 
     public queue: Collection<Snowflake, queueManager> = new Collection();
