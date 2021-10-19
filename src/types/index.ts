@@ -7,7 +7,7 @@ export interface configType {
     };
     lavalink: NodeOptions[];
     botOwners: Snowflake[];
-    maxDatabaseCacheLifetime: number;
+    cacheLifeTime: number;
     redisHost: string;
     redisPort: number;
     redisPassword: string;

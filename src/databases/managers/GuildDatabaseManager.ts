@@ -5,7 +5,7 @@ import { GuildSetting } from "../entities/Guild";
 import { Cheshire } from "cheshire";
 export class GuildDatabaseManager {
     public repository!: MongoRepository<GuildSetting>;
-    public cache: Cheshire<Snowflake, GuildSetting> = new Cheshire({ lifetime: config.maxDatabaseCacheLifetime });
+    public cache: Cheshire<Snowflake, GuildSetting> = new Cheshire({ lifetime: config.cacheLifeTime });
 
     public _init() {
         this.repository = getMongoRepository(GuildSetting);
