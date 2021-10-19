@@ -6,11 +6,15 @@ import { lavalinkSource, ShoukakuTrack } from "../../../../types";
 import { audioManager } from "../../audioManager";
 import { Plugin } from "../../utils/Plugin";
 import fetch from "petitio";
+import { Cheshire } from "cheshire/src/Cheshire";
+import { config } from "../../../../utils/parsedConfig";
 export class Bilibili extends Plugin {
     public name = "Bilibili";
     public regex = /(?:http:\/\/|https:\/\/|)((www.)|(m.))bilibili.com\/(video)[/:]([A-Za-z0-9]+)/;
     public manager!: audioManager;
     private _resolveTrack!: (query: string, { requester, source }: { requester?: User; source?: lavalinkSource }) => Promise<ShoukakuTrackList | null>;
+    public cache: Cheshire<string, any> = new Cheshire({ lifetime: config.cacheLifeTime });
+
     private readonly functions = {
         video: this.getVideo.bind(this)
     };
@@ -43,6 +47,7 @@ export class Bilibili extends Plugin {
     }
 
     private async getVideo(videoId: string, requester: User | undefined): Promise<ShoukakuTrackList | null> {
+        if (this.cache.has(videoId)) return new ShoukakuTrackList({ loadType: "TRACK_LOADED", playlistInfo: {}, tracks: [this.cache.get(videoId)] });
         const { data: videoInfo } = await fetch("https://api.bilibili.com/x/web-interface/view").query("bvid", videoId).json();
 
         const { data: playerInfo } = await fetch("https://api.bilibili.com/x/player/playurl").query("bvid", videoId).query("cid", videoInfo.cid)
@@ -69,6 +74,7 @@ export class Bilibili extends Plugin {
                 identifier: retriveTrack.tracks[0].info.identifier
             }
         };
+        this.cache.set(videoId, newTrackMeta);
         return new ShoukakuTrackList({ loadType: "TRACK_LOADED", playlistInfo: {}, tracks: [newTrackMeta] });
     }
 
