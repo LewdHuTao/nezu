@@ -6,6 +6,7 @@ import { Libraries, Shoukaku } from "shoukaku";
 import { GuildDatabaseManager } from "../databases/managers/GuildDatabaseManager";
 import { audioManager } from "../managers/audio/audioManager";
 import { Bilibili } from "../managers/audio/plugins/Bilibili";
+import Spotify from "../managers/audio/plugins/Spotify";
 import { config } from "../utils/parsedConfig";
 
 class NezuClient extends SapphireClient {
@@ -16,7 +17,14 @@ class NezuClient extends SapphireClient {
 
     public audioManager: audioManager = new audioManager(this.shoukaku, this, {
         plugins: [
-            new Bilibili()
+            new Bilibili(),
+            new Spotify({
+                cacheTrack: true,
+                clientId: config.spotifyClientId,
+                clientSecret: config.spotifyClientSecret,
+                maxCacheLifeTime: config.cacheLifeTime,
+                strategy: "API"
+            })
         ]
     });
 

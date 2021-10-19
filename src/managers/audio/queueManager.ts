@@ -2,8 +2,10 @@ import { GuildTextBasedChannelTypes } from "@sapphire/discord.js-utilities";
 import { Message } from "discord.js";
 import { ShoukakuPlayer } from "shoukaku";
 import { TrackEndEvent, TrackStartEvent } from "shoukaku/types/guild/ShoukakuPlayer";
+import { ShoukakuTrack } from "../../types";
 import { audioManager } from "./audioManager";
 import { queueTrack } from "./utils/queueTrack";
+import { TrackUtils } from "./utils/TrackUtils";
 
 export class queueManager {
     public constructor(public audioManager: audioManager, public shoukakuPlayer: ShoukakuPlayer, public textChannel: GuildTextBasedChannelTypes) {
@@ -21,8 +23,15 @@ export class queueManager {
     public playing = false;
     public lastMessage: Message | undefined;
 
-    public play(track?: string, options?: { noReplace?: boolean | undefined; pause?: boolean | undefined; startTime?: number | undefined; endTime?: number | undefined } | undefined) {
+    public async play(track?: string, options?: { noReplace?: boolean | undefined; pause?: boolean | undefined; startTime?: number | undefined; endTime?: number | undefined } | undefined) {
         if (!track && !this.queueTrack.current) throw new RangeError("There are no available track to play.");
+        if(TrackUtils.isUnresolved(this.queueTrack.current)) {
+            const resolvedTrack = await this.audioManager.resolveTrack(`${this.queueTrack.current?.info.title} - ${this.queueTrack.current?.info.author}`, { requester: (this.queueTrack.current as ShoukakuTrack)?.requester });
+            if (!resolvedTrack) throw new RangeError("Could not resolve unresolve track, cant find same track.");
+            //@ts-ignore
+            resolvedTrack.tracks[0].requester = this.queueTrack.current.requester
+            this.queueTrack.current = resolvedTrack.tracks[0]
+        }
         return this.shoukakuPlayer.playTrack(track ?? this.queueTrack.current!, options);
     }
 }

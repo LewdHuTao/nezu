@@ -16,6 +16,8 @@ export interface configType {
     mongoDatabaseURL: string | undefined;
     weebyToken: string;
     devmode: boolean;
+    spotifyClientId: string;
+    spotifyClientSecret: string;
 }
 
 export interface jsonWeebyFormatText {
@@ -37,6 +39,21 @@ export class ShoukakuTrack {
         isStream?: boolean;
         position?: number;
         title?: string;
+        uri?: string;
+    };
+}
+
+export class UnresolvedShoukakuTrack {
+    requester?: User | undefined;
+    track?: Base64String;
+    info!: {
+        identifier?: string;
+        isSeekable?: boolean;
+        author: string;
+        length: number;
+        isStream?: boolean;
+        position?: number;
+        title: string;
         uri?: string;
     };
 }
