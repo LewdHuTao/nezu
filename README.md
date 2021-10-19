@@ -2,7 +2,7 @@
 
 > [@NezukoChan](https://github.com/NezuChan/nezu) (A best free to use music bot powered by lavalink.) 
 
-🎵 | Listen to a music with style! Feature rich with high quality music from YouTube/Soundcloud/BiliBili.
+🎵 | Listen to a music with style! Feature rich!
 
 ## Disclaimer
  - please support the project by give the project star
