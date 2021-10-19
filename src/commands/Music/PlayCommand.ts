@@ -30,7 +30,7 @@ export class clientCommand extends Command {
             await message.channel.send({
                 embeds: [
                     new MessageEmbed()
-                        .setDescription(`✅ | Added ${track.playlistName} to the queue`)
+                        .setDescription(`✅ | Added \`${track.playlistName}\` to the queue`)
                         .setColor("LUMINOUS_VIVID_PINK")
                 ]
             });
@@ -39,7 +39,7 @@ export class clientCommand extends Command {
             await message.channel.send({
                 embeds: [
                     new MessageEmbed()
-                        .setDescription(`✅ | Added ${track.tracks[0].info.title} to the queue`)
+                        .setDescription(`✅ | Added \`${track.tracks[0].info.title}\` to the queue`)
                         .setColor("LUMINOUS_VIVID_PINK")
                 ]
             });
