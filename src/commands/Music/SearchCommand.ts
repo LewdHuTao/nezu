@@ -35,7 +35,7 @@ export class clientCommand extends Command {
                 ]
             });
             if (audio?.queueTrack.totalSize === track.tracks.length) return audio?.play();
-        } else if (track.type === "TRACK" || track.type === "SEARCH") {
+        } else if (track.type === "TRACK") {
             await message.channel.send({
                 embeds: [
                     new MessageEmbed()
