@@ -20,4 +20,9 @@
 ### How user can delete their saved data?
  - For user id, you can simply delete all playlist they have.
  - For guild id, you can simply kick the bot from the server.
+## Bot Mission
+ - Delivery good quality music bot without paying any money.
+ - Make it free, with no charge.
+ - Easy to use.
+ - Help from the community.
 ###### © KagChi 2021 All rights reserved.
