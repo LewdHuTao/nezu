@@ -32,4 +32,9 @@ export class GuildDatabaseManager {
         if (this.repository) this.cache.set(id, data);
         return data;
     }
+
+    public async delete(id: Snowflake) {
+        await this.repository.deleteOne({ id });
+        return this.cache.delete(id);
+    }
 }
