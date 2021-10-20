@@ -33,4 +33,15 @@ export class queueTrack extends Array<ShoukakuTrack> {
     public getTrack(base64: string): ShoukakuTrack | undefined {
         return this.current?.track === base64 ? this.current : this.filter(x => x.track === base64)[0];
     }
+
+    public clear(): void {
+        this.splice(0);
+    }
+
+    public shuffle(): void {
+        for (let i = this.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [this[i], this[j]] = [this[j], this[i]];
+        }
+    }
 }
