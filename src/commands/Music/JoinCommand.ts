@@ -6,7 +6,7 @@ import { GuildTextBasedChannelTypes } from "@sapphire/discord.js-utilities";
 @ApplyOptions<CommandOptions>({
     name: "join",
     description: "let bot join current user voice channel",
-    preconditions: ["threadCondition", "onVoiceCondition"],
+    preconditions: ["threadCondition", "onVoiceCondition", "alreadyConnect"],
     requiredClientPermissions: ["SEND_MESSAGES"]
 })
 
