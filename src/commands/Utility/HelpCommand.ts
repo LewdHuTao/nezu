@@ -17,7 +17,7 @@ export class clientCommand extends Command {
             const embed = new MessageEmbed()
                 .addField("Description", `${command.description ? command.description : "No description"}`)
                 .addField("Detailed Description", `${command.detailedDescription ? command.detailedDescription : "No detailed description"}`)
-                .addField("Aliases", command.aliases.length > 1 ? `\`${command.aliases.join("` `")}\`` : "No aliases", true)
+                .addField("Aliases", command.aliases.length ? `\`${command.aliases.join("` `")}\`` : "No aliases", true)
                 .setColor("LUMINOUS_VIVID_PINK");
             return message.channel.send({ embeds: [embed] });
         }
