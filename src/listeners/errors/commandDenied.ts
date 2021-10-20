@@ -9,17 +9,17 @@ import { isGuildBasedChannel } from "@sapphire/discord.js-utilities";
 })
 export class clientListener extends Listener {
     async run(error: Error, context: CommandDeniedPayload) {
-        if (isGuildBasedChannel(context.message.channel) && context.message.channel.isThread() && context.message.channel.permissionsFor(context.message.guild?.me!).missing(["SEND_MESSAGES_IN_THREADS", "EMBED_LINKS"])) {
+        if (isGuildBasedChannel(context.message.channel) && context.message.channel.isThread() && !context.message.channel.permissionsFor(context.message.guild?.me!).has(["SEND_MESSAGES_IN_THREADS"] || !context.message.channel.permissionsFor(context.message.guild?.me!).has(["EMBED_LINKS"]))) {
             return context.message.author.send({
                 embeds: [
                     new MessageEmbed()
                         .setAuthor("Support Server [CLICK]", undefined, "https://discord.gg/b47d4AqxFR")
-                        .setDescription(`I dont have permissions send message and embed in ${context.message.channel.name}`)
+                        .setDescription(`I dont have permissions send message in threads and embed in ${context.message.channel.name}`)
                         .setColor("LUMINOUS_VIVID_PINK")
                 ]
             });
         }
-        if (isGuildBasedChannel(context.message.channel) && context.message.channel.permissionsFor(context.message.guild?.me!).missing(["SEND_MESSAGES", "EMBED_LINKS"])) {
+        if (isGuildBasedChannel(context.message.channel) && !context.message.channel.permissionsFor(context.message.guild?.me!).has(["SEND_MESSAGES"] || !context.message.channel.permissionsFor(context.message.guild?.me!).has(["EMBED_LINKS"]))) {
             return context.message.author.send({
                 embeds: [
                     new MessageEmbed()
