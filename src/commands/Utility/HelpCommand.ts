@@ -5,6 +5,7 @@ import { Message, MessageEmbed } from "discord.js";
 @ApplyOptions<CommandOptions>({
     name: "help",
     description: "get bot help command",
+    preconditions: ["threadCondition"],
     requiredClientPermissions: ["SEND_MESSAGES", "EMBED_LINKS"]
 })
 
