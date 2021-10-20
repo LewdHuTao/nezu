@@ -2,7 +2,7 @@ import { GuildTextBasedChannelTypes, VoiceBasedChannelTypes } from "@sapphire/di
 import { SapphireClient } from "@sapphire/framework";
 import { Collection, Snowflake, User } from "discord.js";
 import { EventEmitter } from "events";
-import { Shoukaku } from "shoukaku";
+import { Constants, Shoukaku } from "shoukaku";
 import { lavalinkSource, ShoukakuTrack } from "../../types";
 import { isURL } from "../../utils/isURL";
 import { queueManager } from "./queueManager";
@@ -36,7 +36,26 @@ export class audioManager extends EventEmitter {
     }
 
     public async handleJoin(channel: VoiceBasedChannelTypes, textChannel: GuildTextBasedChannelTypes) {
-        if (this.queue.has(channel.guildId)) return this.queue.get(channel.guildId)!;
+        if (this.queue.has(channel.guildId)) {
+            if (this.queue.get(channel.guildId)?.shoukakuPlayer.connection.state === Constants.state.CONNECTED) return this.queue.get(channel.guildId)!;
+            if (this.queue.get(channel.guildId)?.shoukakuPlayer.connection.state !== Constants.state.CONNECTED) {
+                const player = await this.shoukaku.getNode().joinChannel({
+                    channelId: channel.id,
+                    guildId: channel.guildId,
+                    shardId: channel.guild?.shardId,
+                    deaf: true
+                });
+                const oldQueue = this.queue.get(channel.guildId)!;
+                const queue = new queueManager(this, player, textChannel);
+                queue.queueLoop = oldQueue.queueLoop;
+                queue.queueTrack = oldQueue.queueTrack;
+                queue.lastMessage = oldQueue.lastMessage;
+                queue.textChannel = oldQueue.textChannel;
+                queue.trackLoop = oldQueue.trackLoop;
+                this.queue.set(channel.guildId, queue);
+                return queue;
+            }
+        }
         const player = await this.shoukaku.getNode().joinChannel({
             channelId: channel.id,
             guildId: channel.guildId,
