@@ -1,14 +1,14 @@
-import { CommandErrorPayload, Events, Listener, ListenerOptions } from "@sapphire/framework";
+import { CommandDeniedPayload, Events, Listener, ListenerOptions } from "@sapphire/framework";
 import { ApplyOptions } from "@sapphire/decorators";
 import { red, magentaBright } from "colorette";
 import { MessageEmbed } from "discord.js";
 import { isGuildBasedChannel } from "@sapphire/discord.js-utilities";
 
 @ApplyOptions<ListenerOptions>({
-    name: Events.CommandError
+    name: Events.CommandDenied
 })
 export class clientListener extends Listener {
-    async run(error: Error, context: CommandErrorPayload) {
+    async run(error: Error, context: CommandDeniedPayload) {
         if (isGuildBasedChannel(context.message.channel) && context.message.channel.isThread() && context.message.channel.permissionsFor(context.message.guild?.me!).missing(["SEND_MESSAGES_IN_THREADS", "EMBED_LINKS"])) {
             return context.message.author.send({
                 embeds: [
@@ -37,6 +37,6 @@ export class clientListener extends Listener {
                     .setColor("LUMINOUS_VIVID_PINK")
             ]
         });
-        this.container.client.logger.info(`${red("[Client]")} ${magentaBright(`caught an error: ${error.message}, command: ${context.piece.name}`)}`);
+        this.container.client.logger.info(`${red("[Client]")} ${magentaBright(`caught an error: ${error.message}, command: ${context.command.name}`)}`);
     }
 }
