@@ -1,11 +1,12 @@
 import { CommandOptions, Command, Args } from "@sapphire/framework";
 import { ApplyOptions } from "@sapphire/decorators";
 import { Message, MessageEmbed } from "discord.js";
-
+import { emoji } from "../../utils/Constants";
 @ApplyOptions<CommandOptions>({
     name: "help",
     description: "get bot help command",
     preconditions: ["threadCondition"],
+    aliases: ["h"],
     requiredClientPermissions: ["SEND_MESSAGES", "EMBED_LINKS"]
 })
 
@@ -31,7 +32,8 @@ export class clientCommand extends Command {
         for (const category of categories) {
             const commands = this.container.stores.get("commands").filter(x => x.category === category);
             embed.fields.push({
-                name: `${(category)}`,
+                // @ts-expect-error
+                name: `${emoji[category]} ${category}`,
                 value: commands.map(x => `\`${x.name}\``).join(", "),
                 inline: false
             });
