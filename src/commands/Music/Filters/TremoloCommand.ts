@@ -13,7 +13,7 @@ import { isEligbleReply } from "../../../utils/isEligbleReply";
 export class clientCommand extends Command {
     async messageRun(message: Message) {
         const audio = this.container.client.audioManager.queue.get(message.guildId!);
-        audio?.shoukakuPlayer.filters.tremolo === null ? audio?.shoukakuPlayer.setTremolo({ frequency: 2.0, depth: 0.5 }) : audio?.shoukakuPlayer.setTremolo(null)
+        audio?.shoukakuPlayer.filters.tremolo === null ? audio?.shoukakuPlayer.setTremolo({ frequency: 2.0, depth: 0.5 }) : audio?.shoukakuPlayer.setTremolo(null);
         await message.channel.send({
             reply: isEligbleReply(message),
             embeds: [

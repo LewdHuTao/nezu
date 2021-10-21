@@ -14,7 +14,7 @@ export class clientCommand extends Command {
     async messageRun(message: Message) {
         const audio = this.container.client.audioManager.queue.get(message.guildId!);
         !audio?.shoukakuPlayer.filters.equalizer.length ? audio?.shoukakuPlayer.setLowPass({ smoothing: 20.0 }) : audio?.shoukakuPlayer.setLowPass(null);
-        
+
         await message.channel.send({
             reply: isEligbleReply(message),
             embeds: [
