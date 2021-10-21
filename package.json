@@ -27,7 +27,7 @@
     "discord.js": "13.2.0",
     "dotenv": "10.0.0",
     "js-yaml": "4.1.0",
-    "mongodb": "3.7.2",
+    "mongodb": "3.7.3",
     "petitio": "1.4.0",
     "shoukaku": "2.0.4",
     "spotify-url-info": "2.2.3",
