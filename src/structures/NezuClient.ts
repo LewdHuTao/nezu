@@ -4,6 +4,8 @@ import { Intents, Message } from "discord.js";
 import { join } from "path";
 import { Libraries, Shoukaku } from "shoukaku";
 import { GuildDatabaseManager } from "../databases/managers/GuildDatabaseManager";
+import { PlaylistDatabaseManager } from "../databases/managers/PlaylistDatabaseManager";
+import { PlaylistTrackDatabaseManager } from "../databases/managers/PlaylistTrackDatabaseManager";
 import { audioManager } from "../managers/audio/audioManager";
 import { Bilibili } from "../managers/audio/plugins/Bilibili";
 import Spotify from "../managers/audio/plugins/Spotify";
@@ -29,7 +31,9 @@ class NezuClient extends SapphireClient {
     });
 
     public databases = {
-        guilds: new GuildDatabaseManager()
+        guilds: new GuildDatabaseManager(),
+        userPlaylists: new PlaylistDatabaseManager(),
+        playlistTrack: new PlaylistTrackDatabaseManager()
     };
 
     constructor() {
@@ -57,7 +61,7 @@ class NezuClient extends SapphireClient {
             caseInsensitiveCommands: true,
             caseInsensitivePrefixes: true,
             loadDefaultErrorListeners: false,
-            intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_VOICE_STATES]
+            intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_VOICE_STATES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS]
         });
     }
 }
@@ -66,6 +70,8 @@ declare module "@sapphire/framework" {
     export interface SapphireClient {
         databases: {
             guilds: GuildDatabaseManager;
+            userPlaylists: PlaylistDatabaseManager;
+            playlistTrack: PlaylistTrackDatabaseManager;
         };
         shoukaku: Shoukaku;
         audioManager: audioManager;
