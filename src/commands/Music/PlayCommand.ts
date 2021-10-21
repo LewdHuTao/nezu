@@ -14,6 +14,15 @@ import { GuildTextBasedChannelTypes } from "@sapphire/discord.js-utilities";
 export class clientCommand extends Command {
     async messageRun(message: Message, args: Args) {
         const userArgument = await args.restResult("string");
+        if (!userArgument) {
+            return message.channel.send({
+                embeds: [
+                    new MessageEmbed()
+                        .setDescription(`❌ | You must input track name/url`)
+                        .setColor("LUMINOUS_VIVID_PINK")
+                ]
+            });
+        }
         const audio = await this.container.client.audioManager.handleJoin(message.member?.voice.channel!, message.channel as GuildTextBasedChannelTypes);
         const track = await this.container.client.audioManager.resolveTrack(userArgument.value!, { requester: message.author });
         if (!track || track.type === "LOAD_FAILED" || track.type === "NO_MATCHES") {
