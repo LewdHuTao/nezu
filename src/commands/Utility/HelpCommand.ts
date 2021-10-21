@@ -30,7 +30,7 @@ export class clientCommand extends Command {
             .setDescription("A list of available commands.")
             .setColor("LUMINOUS_VIVID_PINK");
         for (const category of categories) {
-            const commands = this.container.stores.get("commands").filter(x => x.category === category);
+            const commands = this.container.stores.get("commands").filter(x => x.fullCategory[x.fullCategory.length - 1] === category);
             embed.fields.push({
                 // @ts-expect-error
                 name: `${emoji[category]} ${category}`,
