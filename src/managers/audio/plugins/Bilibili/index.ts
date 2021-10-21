@@ -12,7 +12,7 @@ export class Bilibili extends Plugin {
     public name = "Bilibili";
     public regex = /(?:http:\/\/|https:\/\/|)((www.)|(m.))bilibili.com\/(video)[/:]([A-Za-z0-9]+)/;
     public manager!: audioManager;
-    private _resolveTrack!: (query: string, { requester, source }: { requester?: User; source?: lavalinkSource }) => Promise<ShoukakuTrackList | null>;
+    private _resolveTrack!: (query: string, options?: { requester?: User; source?: lavalinkSource }) => Promise<ShoukakuTrackList | null>;
     public cache: Cheshire<string, any> = new Cheshire({ lifetime: config.cacheLifeTime });
 
     private readonly functions = {
@@ -25,15 +25,15 @@ export class Bilibili extends Plugin {
         manager.resolveTrack = this.resolveTrack.bind(this);
     }
 
-    private async resolveTrack(query: string, { requester, source }: { requester?: User; source?: lavalinkSource }): Promise<ShoukakuTrackList | null> {
+    private async resolveTrack(query: string, options?: { requester?: User; source?: lavalinkSource }): Promise<ShoukakuTrackList | null> {
         const [, , , , type, id] = this.regex.exec(query) ?? [];
         if (type in this.functions) {
             try {
                 const func = this.functions[type as keyof Bilibili["functions"]];
-                const searchTrack: ShoukakuTrackListType | null = await func(id, requester);
-                if (searchTrack && (searchTrack.type === "TRACK" || searchTrack.type === "PLAYLIST" || searchTrack.type === "SEARCH")) {
+                const searchTrack: ShoukakuTrackListType | null = await func(id, options?.requester);
+                if (searchTrack && options?.requester && (searchTrack.type === "TRACK" || searchTrack.type === "PLAYLIST" || searchTrack.type === "SEARCH")) {
                     searchTrack.tracks = searchTrack.tracks.map(x => {
-                        (x as ShoukakuTrack).requester = requester;
+                        (x as ShoukakuTrack).requester = options?.requester;
                         return x;
                     });
                 }
@@ -43,7 +43,7 @@ export class Bilibili extends Plugin {
             }
         }
 
-        return this._resolveTrack(query, { requester, source });
+        return this._resolveTrack(query, options);
     }
 
     private async getVideo(videoId: string, requester: User | undefined): Promise<ShoukakuTrackList | null> {

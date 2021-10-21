@@ -77,7 +77,7 @@ export class Spotify extends Plugin {
     public spotifyMatch = /(?:https:\/\/open\.spotify\.com\/|spotify:)(?:.+)?(track|playlist|artist|episode|show|album)[\/:]([A-Za-z0-9]+)/;
 
 
-    private _resolveTrack!: (query: string, { requester, source }: { requester?: User; source?: lavalinkSource }) => Promise<ShoukakuTrackList | null>;
+    private _resolveTrack!: (query: string, options?: { requester?: User; source?: lavalinkSource }) => Promise<ShoukakuTrackList | null>;
     private readonly functions = {
         track: this.resolver.getTrack,
         album: this.resolver.getAlbum,
@@ -105,7 +105,7 @@ export class Spotify extends Plugin {
         audioManager.resolveTrack = this.resolveTrack.bind(this);
     }
 
-    private async resolveTrack(query: string, { requester, source }: { requester?: User; source?: lavalinkSource }): Promise<ShoukakuTrackList | null> {
+    private async resolveTrack(query: string, options?: { requester?: User; source?: lavalinkSource }): Promise<ShoukakuTrackList | null> {
         const [, type, id] = query.match(this.spotifyMatch) ?? [];
         if (type in this.functions) {
             try {
@@ -115,9 +115,9 @@ export class Spotify extends Plugin {
                     const loadType = type === "track" || type === "episode" ? "TRACK_LOADED" : "PLAYLIST_LOADED";
                     const name = ["playlist", "album", "artist", "episode", "show"].includes(type) ? data.name : null;
                     const trackResult = new ShoukakuTrackList({ loadType, playlistInfo: { name }, tracks: data.tracks }) as ShoukakuTrackListType;
-                    if (trackResult && (trackResult.type === "TRACK" || trackResult.type === "PLAYLIST" || trackResult.type === "SEARCH")) {
+                    if (trackResult && options?.requester && (trackResult.type === "TRACK" || trackResult.type === "PLAYLIST" || trackResult.type === "SEARCH")) {
                         trackResult.tracks = trackResult.tracks.map(x => {
-                            (x as ShoukakuTrack).requester = requester;
+                            (x as ShoukakuTrack).requester = options?.requester;
                             return x;
                         });
                     }
@@ -128,7 +128,7 @@ export class Spotify extends Plugin {
                 return null;
             }
         }
-        return this._resolveTrack(query, { requester, source });
+        return this._resolveTrack(query, options);
     }
 
     public unload(manager: audioManager) {

@@ -23,12 +23,12 @@ export class audioManager extends EventEmitter {
 
     public queue: Collection<Snowflake, queueManager> = new Collection();
 
-    public async resolveTrack(query: string, { requester, source = "youtube" }: { requester?: User; source?: lavalinkSource }) {
+    public async resolveTrack(query: string, options?: { requester?: User; source?: lavalinkSource }) {
         const node = this.shoukaku.getNode();
-        const searchTrack = await node.rest.resolve(query, isURL(query) ? undefined : source);
-        if (searchTrack && (searchTrack.type === "TRACK" || searchTrack.type === "PLAYLIST" || searchTrack.type === "SEARCH")) {
+        const searchTrack = await node.rest.resolve(query, isURL(query) ? undefined : options?.source ?? "youtube");
+        if (searchTrack && options?.requester !== undefined && (searchTrack.type === "TRACK" || searchTrack.type === "PLAYLIST" || searchTrack.type === "SEARCH")) {
             searchTrack.tracks = searchTrack.tracks.map(x => {
-                (x as ShoukakuTrack).requester = requester;
+                (x as ShoukakuTrack).requester = options?.requester;
                 return x;
             });
         }
