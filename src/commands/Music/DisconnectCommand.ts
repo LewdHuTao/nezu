@@ -14,6 +14,7 @@ import { isEligbleReply } from "../../utils/isEligbleReply";
 export class clientCommand extends Command {
     async messageRun(message: Message) {
         this.container.client.audioManager.queue.get(message.guildId!)?.shoukakuPlayer.connection.disconnect();
+        this.container.client.audioManager.queue.delete(message.guildId!)
         await message.channel.send({
             reply: isEligbleReply(message),
             embeds: [
