@@ -13,7 +13,7 @@ export class clientCommand extends Command {
     async messageRun(message: Message) {
         const embed = new MessageEmbed()
             .setImage((await this.weebyManager("angry")).url)
-            .setColor("LUMINOUS_VIVID_PINK")
+            .setColor("LUMINOUS_VIVID_PINK");
         await message.channel.send({ embeds: [embed] });
     }
 
