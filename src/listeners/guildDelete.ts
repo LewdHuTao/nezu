@@ -11,6 +11,7 @@ export class clientListener extends Listener {
         if (!guild.available) return;
         if (this.container.client.audioManager.queue.has(guild.id)) {
             this.container.client.audioManager.queue.get(guild.id)?.shoukakuPlayer.connection.disconnect();
+            this.container.client.audioManager.queue.delete(guild.id);
             this.container.client.logger.info(`${red("[Client]")} ${magentaBright(`${this.container.client.user!.username} kicked from ${guild.name} but there was active player`)}`);
         }
         await this.container.client.databases.guilds.delete(guild.id);
