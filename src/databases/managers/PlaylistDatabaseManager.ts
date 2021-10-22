@@ -42,7 +42,8 @@ export class PlaylistDatabaseManager {
     }
 
     public async delete(userId: Snowflake, playlistName: string) {
-        await this.repository.deleteOne({ userId, playlistName });
-        return this.cache.delete(userId);
+        const resolvePlaylist = await this.resolvePlaylist(userId, playlistName);
+        await this.repository.deleteOne({ userId, playlistName: resolvePlaylist!.playlistName });
+        return this.cache.delete(resolvePlaylist!.playlistId);
     }
 }
