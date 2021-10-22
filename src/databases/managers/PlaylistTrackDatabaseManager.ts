@@ -3,7 +3,7 @@ import { getMongoRepository, MongoRepository } from "typeorm";
 import { config } from "../../utils/parsedConfig";
 import { Cheshire } from "cheshire";
 import { PlaylistTrackSetting } from "../entities/playlistTrack";
-import { ShoukakuTrack } from "shoukaku/types/Constants";
+import { ShoukakuTrack } from "shoukaku";
 import crypto from "crypto";
 
 export class PlaylistTrackDatabaseManager {

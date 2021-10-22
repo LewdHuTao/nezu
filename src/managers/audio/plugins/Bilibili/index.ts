@@ -1,18 +1,16 @@
 import { User } from "discord.js";
-// @ts-expect-error Shoukaku type problem
 import { ShoukakuTrackList } from "shoukaku";
-import { ShoukakuTrackList as ShoukakuTrackListType } from "shoukaku/types/Constants";
-import { lavalinkSource, ShoukakuTrack } from "../../../../types";
 import { audioManager } from "../../audioManager";
 import { Plugin } from "../../utils/Plugin";
 import fetch from "petitio";
 import { Cheshire } from "cheshire/src/Cheshire";
 import { config } from "../../../../utils/parsedConfig";
+import { LavalinkSource } from "shoukaku/types";
 export class Bilibili extends Plugin {
     public name = "Bilibili";
     public regex = /(?:http:\/\/|https:\/\/|)((www.)|(m.))bilibili.com\/(video)[/:]([A-Za-z0-9]+)/;
     public manager!: audioManager;
-    private _resolveTrack!: (query: string, options?: { requester?: User; source?: lavalinkSource }) => Promise<ShoukakuTrackList | null>;
+    private _resolveTrack!: (query: string, options?: { requester?: User; source?: LavalinkSource }) => Promise<ShoukakuTrackList | null>;
     public cache: Cheshire<string, any> = new Cheshire({ lifetime: config.cacheLifeTime });
 
     private readonly functions = {
@@ -25,15 +23,15 @@ export class Bilibili extends Plugin {
         manager.resolveTrack = this.resolveTrack.bind(this);
     }
 
-    private async resolveTrack(query: string, options?: { requester?: User; source?: lavalinkSource }): Promise<ShoukakuTrackList | null> {
+    private async resolveTrack(query: string, options?: { requester?: User; source?: LavalinkSource }): Promise<ShoukakuTrackList | null> {
         const [, , , , type, id] = this.regex.exec(query) ?? [];
         if (type in this.functions) {
             try {
                 const func = this.functions[type as keyof Bilibili["functions"]];
-                const searchTrack: ShoukakuTrackListType | null = await func(id, options?.requester);
+                const searchTrack: ShoukakuTrackList | null = await func(id, options?.requester);
                 if (searchTrack && options?.requester && (searchTrack.type === "TRACK" || searchTrack.type === "PLAYLIST" || searchTrack.type === "SEARCH")) {
                     searchTrack.tracks = searchTrack.tracks.map(x => {
-                        (x as ShoukakuTrack).requester = options?.requester;
+                        x.requester = options?.requester;
                         return x;
                     });
                 }

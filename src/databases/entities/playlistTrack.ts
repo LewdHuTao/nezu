@@ -1,6 +1,6 @@
 import { Snowflake } from "discord.js";
+import { ShoukakuTrack } from "shoukaku";
 import { Entity, Column, ObjectID, ObjectIdColumn, PrimaryColumn } from "typeorm";
-import { ShoukakuTrack } from "../../types";
 
 @Entity({ name: "playlistTracks" })
 export class PlaylistTrackSetting {

@@ -1,7 +1,6 @@
 import { CommandOptions, Command } from "@sapphire/framework";
 import { ApplyOptions } from "@sapphire/decorators";
 import { Message, MessageEmbed } from "discord.js";
-import { ShoukakuTrack } from "../../types";
 import { isGuildBasedChannel, PaginatedMessage } from "@sapphire/discord.js-utilities";
 import { Chunk } from "../../utils/Chunk";
 import { joinArray } from "../../utils/joinArray";
@@ -28,7 +27,7 @@ export class clientCommand extends Command {
                 ]
             });
         }
-        const pages = Chunk(player?.queueTrack.map((x, i) => `\`${i + 1})\` ${x.info.title} ${x.info.author ? `- ${x.info.author}` : ""} [${(x as ShoukakuTrack).requester}]`), 7);
+        const pages = Chunk(player?.queueTrack.map((x, i) => `\`${i + 1})\` ${x.info.title} ${x.info.author ? `- ${x.info.author}` : ""} [${x.requester}]`), 7);
         const PageMessage = new PaginatedMessage({
             template: new MessageEmbed().setThumbnail(message.guild?.iconURL()!).setAuthor(message.guild?.name!, undefined, "https://nezukochan.tech")
                 .setColor("LUMINOUS_VIVID_PINK"),

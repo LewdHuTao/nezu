@@ -3,7 +3,7 @@ import { SapphireClient } from "@sapphire/framework";
 import { Collection, Snowflake, User } from "discord.js";
 import { EventEmitter } from "events";
 import { Constants, Shoukaku } from "shoukaku";
-import { lavalinkSource, ShoukakuTrack } from "../../types";
+import { Base64String, LavalinkSource } from "shoukaku/types";
 import { isURL } from "../../utils/isURL";
 import { queueManager } from "./queueManager";
 import { Plugin } from "./utils/Plugin";
@@ -23,12 +23,12 @@ export class audioManager extends EventEmitter {
 
     public queue: Collection<Snowflake, queueManager> = new Collection();
 
-    public async resolveTrack(query: string, options?: { requester?: User; source?: lavalinkSource }) {
+    public async resolveTrack(query: string, options?: { requester?: User; source?: LavalinkSource }) {
         const node = this.shoukaku.getNode();
         const searchTrack = await node.rest.resolve(query, isURL(query) ? undefined : options?.source ?? "youtube");
         if (searchTrack && options?.requester !== undefined && (searchTrack.type === "TRACK" || searchTrack.type === "PLAYLIST" || searchTrack.type === "SEARCH")) {
             searchTrack.tracks = searchTrack.tracks.map(x => {
-                (x as ShoukakuTrack).requester = options?.requester;
+                x.requester = options?.requester;
                 return x;
             });
         }
@@ -65,5 +65,22 @@ export class audioManager extends EventEmitter {
         const queue = new queueManager(this, player, textChannel);
         this.queue.set(channel.guildId, queue);
         return queue;
+    }
+}
+
+declare module "shoukaku" {
+    export class ShoukakuTrack {
+        requester: User | undefined;
+        track: Base64String;
+        info: {
+            identifier?: string;
+            isSeekable?: boolean;
+            author?: string;
+            length?: number;
+            isStream?: boolean;
+            position?: number;
+            title?: string;
+            uri?: string;
+        };
     }
 }

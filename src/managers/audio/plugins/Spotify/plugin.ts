@@ -1,12 +1,10 @@
 import { User } from "discord.js";
-// @ts-expect-error
 import { ShoukakuTrackList } from "shoukaku";
-import { ShoukakuTrackList as ShoukakuTrackListType } from "shoukaku/types/Constants";
-import { lavalinkSource, ShoukakuTrack } from "../../../../types";
 import { audioManager } from "../../audioManager";
 import resolver from "./resolver";
 import { Result, SpotifyOptions } from "./typings";
 import { Plugin } from "../../utils/Plugin";
+import { LavalinkSource } from "shoukaku/types";
 
 const check = (options?: SpotifyOptions) => {
     if (
@@ -77,7 +75,7 @@ export class Spotify extends Plugin {
     public spotifyMatch = /(?:https:\/\/open\.spotify\.com\/|spotify:)(?:.+)?(track|playlist|artist|episode|show|album)[\/:]([A-Za-z0-9]+)/;
 
 
-    private _resolveTrack!: (query: string, options?: { requester?: User; source?: lavalinkSource }) => Promise<ShoukakuTrackList | null>;
+    private _resolveTrack!: (query: string, options?: { requester?: User; source?: LavalinkSource }) => Promise<ShoukakuTrackList | null>;
     private readonly functions = {
         track: this.resolver.getTrack,
         album: this.resolver.getAlbum,
@@ -105,7 +103,7 @@ export class Spotify extends Plugin {
         audioManager.resolveTrack = this.resolveTrack.bind(this);
     }
 
-    private async resolveTrack(query: string, options?: { requester?: User; source?: lavalinkSource }): Promise<ShoukakuTrackList | null> {
+    private async resolveTrack(query: string, options?: { requester?: User; source?: LavalinkSource }): Promise<ShoukakuTrackList | null> {
         const [, type, id] = query.match(this.spotifyMatch) ?? [];
         if (type in this.functions) {
             try {
@@ -114,10 +112,10 @@ export class Spotify extends Plugin {
                     const data: Result = await func.fetch(query, id);
                     const loadType = type === "track" || type === "episode" ? "TRACK_LOADED" : "PLAYLIST_LOADED";
                     const name = ["playlist", "album", "artist", "episode", "show"].includes(type) ? data.name : null;
-                    const trackResult = new ShoukakuTrackList({ loadType, playlistInfo: { name }, tracks: data.tracks }) as ShoukakuTrackListType;
+                    const trackResult = new ShoukakuTrackList({ loadType, playlistInfo: { name }, tracks: data.tracks });
                     if (trackResult && options?.requester && (trackResult.type === "TRACK" || trackResult.type === "PLAYLIST" || trackResult.type === "SEARCH")) {
                         trackResult.tracks = trackResult.tracks.map(x => {
-                            (x as ShoukakuTrack).requester = options?.requester;
+                            x.requester = options?.requester;
                             return x;
                         });
                     }

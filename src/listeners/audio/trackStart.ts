@@ -3,7 +3,7 @@ import { ApplyOptions } from "@sapphire/decorators";
 import { green, magentaBright } from "colorette";
 import { Client, MessageEmbed } from "discord.js";
 import { queueManager } from "../../managers/audio/queueManager";
-import { ShoukakuTrack } from "../../types";
+import { ShoukakuTrack } from "shoukaku";
 
 @ApplyOptions<ListenerOptions>({
     name: "trackStart",

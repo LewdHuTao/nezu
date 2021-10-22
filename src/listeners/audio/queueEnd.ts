@@ -3,6 +3,7 @@ import { ApplyOptions } from "@sapphire/decorators";
 import { green, magentaBright } from "colorette";
 import { Client, MessageEmbed } from "discord.js";
 import { queueManager } from "../../managers/audio/queueManager";
+import { ShoukakuTrack } from "shoukaku";
 
 @ApplyOptions<ListenerOptions>({
     name: "queueEnd",
@@ -10,9 +11,10 @@ import { queueManager } from "../../managers/audio/queueManager";
     event: "queueEnd"
 })
 export class clientListener extends Listener {
-    async run(player: queueManager) {
+    async run(player: queueManager, track: ShoukakuTrack) {
         player.playing = false;
         player.queueTrack.current = null;
+        player.queueTrack.previous = track;
         if (player.lastMessage) player.lastMessage.delete().catch(() => undefined);
 
         const msg = await player.textChannel.send({

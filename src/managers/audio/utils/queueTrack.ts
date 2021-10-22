@@ -1,4 +1,4 @@
-import { ShoukakuTrack } from "shoukaku/types/Constants";
+import { ShoukakuTrack } from "shoukaku";
 import { TrackUtils } from "./TrackUtils";
 
 export class queueTrack extends Array<ShoukakuTrack> {

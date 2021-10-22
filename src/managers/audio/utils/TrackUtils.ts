@@ -1,4 +1,4 @@
-import { ShoukakuTrack } from "shoukaku/types/Constants";
+import { ShoukakuTrack } from "shoukaku";
 
 export class TrackUtils {
     public static isUnresolved(track: any) {

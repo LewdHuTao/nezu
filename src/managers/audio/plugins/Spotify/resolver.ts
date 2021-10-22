@@ -3,7 +3,7 @@ import { SearchResult, SpotifyTrack } from "./typings";
 import { EpisodeManager, PlaylistManager, ShowManager, TrackManager, AlbumManager, ArtistManager } from "./Manager";
 import Spotify from "./index";
 import fetch from "petitio";
-import { UnresolvedShoukakuTrack } from "../../../../types";
+import { ShoukakuTrack } from "shoukaku";
 
 export default class resolver {
     constructor(public plugin: Spotify) {
@@ -31,7 +31,7 @@ export default class resolver {
         };
     }
 
-    public static buildSearch(loadType: string, tracks: UnresolvedShoukakuTrack[], error: string, name: string): SearchResult {
+    public static buildSearch(loadType: string, tracks: ShoukakuTrack[], error: string, name: string): SearchResult {
         return {
             loadType,
             tracks: tracks ?? [],

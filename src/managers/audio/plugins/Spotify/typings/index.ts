@@ -1,5 +1,5 @@
+import { ShoukakuTrack } from "shoukaku";
 import { ArtistsEntity } from "spotify-url-info";
-import { UnresolvedShoukakuTrack } from "../../../../../types";
 
 export interface SpotifyOptions {
     strategy?: Strategy;
@@ -45,7 +45,7 @@ export interface SearchResult {
         selectedTrack: number;
         name: string;
     } | null;
-    tracks: UnresolvedShoukakuTrack[];
+    tracks: ShoukakuTrack[];
 }
 export interface UnresolvedSpotifyTrack {
     info: {
@@ -96,6 +96,6 @@ export interface Show {
 }
 
 export interface Result {
-    tracks: UnresolvedShoukakuTrack[];
+    tracks: UnresolvedSpotifyTrack[];
     name?: string;
 }
