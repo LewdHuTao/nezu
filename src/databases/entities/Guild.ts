@@ -17,5 +17,8 @@ export class GuildSetting {
 
     @Column("string")
     public lng = "en-US";
+
+    @Column("boolean")
+    public stayInVc = false;
 }
 

@@ -1,9 +1,9 @@
-import { Listener, ListenerOptions } from "@sapphire/framework";
 import { ApplyOptions } from "@sapphire/decorators";
+import { Listener, ListenerOptions } from "@sapphire/framework";
 import { green, magentaBright } from "colorette";
 import { Client, MessageEmbed } from "discord.js";
-import { queueManager } from "../../managers/audio/queueManager";
 import { ShoukakuTrack } from "shoukaku";
+import { queueManager } from "../../managers/audio/queueManager";
 
 @ApplyOptions<ListenerOptions>({
     name: "queueEnd",
@@ -26,5 +26,20 @@ export class clientListener extends Listener {
         });
         player.lastMessage = msg;
         this.container.client.logger.info(`${green("[Audio]")} ${magentaBright(`guildId ${player.textChannel.guildId} queue ended`)}`);
+        if (player.stayInVc) return;
+        player.playerTimeout = setTimeout(() => {
+            player.shoukakuPlayer.connection.disconnect();
+            /* eslint @typescript-eslint/no-empty-function: "off" */
+            player.lastMessage?.delete().catch(() => {});
+            player.textChannel.send({
+                embeds: [
+                    new MessageEmbed()
+                        .setDescription(`✅ | I've been inactive for 3 minutes, destroying player`)
+                        .setColor("LUMINOUS_VIVID_PINK")
+                ]
+            /* eslint @typescript-eslint/no-empty-function: "off" */
+            }).catch(() => {});
+            this.container.client.audioManager.queue.delete(player.shoukakuPlayer.connection.guildId);
+        }, 180000).unref();
     }
 }

@@ -15,6 +15,11 @@ export class queueManager {
         });
     }
 
+    public get stayInVc() {
+        return this.audioManager.client.databases.guilds.cache.get(this.shoukakuPlayer.connection.guildId)?.stayInVc ?? false;
+    }
+
+    public playerTimeout: NodeJS.Timeout | undefined;
     public queueTrack = new queueTrack();
     public queueLoop = false;
     public trackLoop = false;
