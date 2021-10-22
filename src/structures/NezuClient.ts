@@ -17,7 +17,7 @@ class NezuClient extends SapphireClient {
         moveOnDisconnect: true
     });
 
-    public audioManager: audioManager = new audioManager(this.shoukaku, this, {
+    public audioManager: audioManager = new audioManager(this, {
         plugins: [
             new Bilibili(),
             new Spotify({

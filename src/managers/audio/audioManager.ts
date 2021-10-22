@@ -9,8 +9,9 @@ import { queueManager } from "./queueManager";
 import { Plugin } from "./utils/Plugin";
 
 export class audioManager extends EventEmitter {
-    public plugins: Plugin[] | undefined;
-    public constructor(public shoukaku: Shoukaku, public client: SapphireClient, { plugins }: { plugins?: Plugin[] }) {
+    public plugins: Plugin[];
+    public shoukaku: Shoukaku;
+    public constructor(public client: SapphireClient, { plugins }: { plugins?: Plugin[] }) {
         super();
         if (plugins) {
             for (const [index, plugin] of plugins.entries()) {
@@ -18,7 +19,8 @@ export class audioManager extends EventEmitter {
                 plugin.load(this);
             }
         }
-        this.plugins = plugins;
+        this.shoukaku = client.shoukaku;
+        this.plugins = plugins ?? [];
     }
 
     public queue: Collection<Snowflake, queueManager> = new Collection();
