@@ -12,9 +12,8 @@ import petitio from "petitio"; import { config } from "../../../utils/parsedConf
 export class clientCommand extends Command {
     async messageRun(message: Message) {
         const embed = new MessageEmbed()
-            .setImage(
-                (await this.weebyManager("pat")).url
-            );
+            .setImage((await this.weebyManager("pat")).url)
+            .setColor("LUMINOUS_VIVID_PINK");
         await message.channel.send({ embeds: [embed] });
     }
 

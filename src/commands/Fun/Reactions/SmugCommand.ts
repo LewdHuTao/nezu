@@ -12,9 +12,8 @@ import waifuPicsApi from "../../../utils/waifuPicsApi";
 export class clientCommand extends Command {
     async messageRun(message: Message) {
         const embed = new MessageEmbed()
-            .setImage(
-                (await waifuPicsApi.reactionImage("smug")).url
-            );
+            .setImage((await waifuPicsApi.reactionImage("smug")).url)
+            .setColor("LUMINOUS_VIVID_PINK");
         await message.channel.send({ embeds: [embed] });
     }
 }

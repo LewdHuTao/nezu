@@ -12,13 +12,9 @@ export class clientCommand extends Command {
     async messageRun(message: Message, args: Args) {
         const userArgument = (await args.pickResult("member")).value ?? message.member;
         const embed = new MessageEmbed()
-            .setAuthor(
-                userArgument?.id === message.author.id
-                    ? `How did you bully yourself?`
-                    : `${userArgument?.user.username} you got bully by ${message.author.username}`,
-                message.author.displayAvatarURL()
-            )
-            .setImage((await waifuPicsApi.reactionImage("bully")).url);
+            .setAuthor(userArgument?.id === message.author.id ? `How did you bully yourself?` : `${userArgument?.user.username} you got bullied by ${message.author.username}`, message.author.displayAvatarURL())
+            .setImage((await waifuPicsApi.reactionImage("bully")).url)
+            .setColor("LUMINOUS_VIVID_PINK");
         await message.channel.send({ embeds: [embed] });
     }
 }

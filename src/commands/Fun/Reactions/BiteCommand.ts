@@ -13,7 +13,8 @@ export class clientCommand extends Command {
         const userArgument = (await args.pickResult("member")).value ?? message.member;
         const embed = new MessageEmbed()
             .setAuthor(userArgument?.id === message.author.id ? `How did you bite yourself?` : `${userArgument?.user.username} you got bitten by ${message.author.username}`, message.author.displayAvatarURL())
-            .setImage((await waifuPicsApi.reactionImage("bite")).url);
+            .setImage((await waifuPicsApi.reactionImage("bite")).url)
+            .setColor("LUMINOUS_VIVID_PINK");
         await message.channel.send({ embeds: [embed] });
     }
 }
