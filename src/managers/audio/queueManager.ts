@@ -14,6 +14,8 @@ export class queueManager {
         this.shoukakuPlayer.on("end", () => {
             this.audioManager.emit("trackEnd", this, this.queueTrack.current);
         });
+        this.shoukakuPlayer.on("exception", () => this.audioManager.emit("trackEnd", this, this.queueTrack.current));
+        this.shoukakuPlayer.on("error", () => this.audioManager.emit("trackEnd", this, this.queueTrack.current));
     }
 
     public get stayInVc() {
