@@ -2,6 +2,7 @@ import { GuildTextBasedChannelTypes } from "@sapphire/discord.js-utilities";
 import { Message } from "discord.js";
 import { ShoukakuPlayer } from "shoukaku";
 import { audioManager } from "./audioManager";
+import { filterManager } from "./filterManager";
 import { queueTrack } from "./utils/queueTrack";
 import { TrackUtils } from "./utils/TrackUtils";
 
@@ -25,6 +26,7 @@ export class queueManager {
     public trackLoop = false;
     public playing = false;
     public lastMessage: Message | undefined;
+    public filters = new filterManager(this);
 
     public async play(track?: string, options?: { noReplace?: boolean | undefined; pause?: boolean | undefined; startTime?: number | undefined; endTime?: number | undefined } | undefined) {
         if (!track && !this.queueTrack.current) throw new RangeError("There are no available track to play.");

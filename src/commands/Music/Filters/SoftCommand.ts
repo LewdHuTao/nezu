@@ -13,13 +13,12 @@ import { isEligbleReply } from "../../../utils/isEligbleReply";
 export class clientCommand extends Command {
     async messageRun(message: Message) {
         const audio = this.container.client.audioManager.queue.get(message.guildId!);
-        !audio?.shoukakuPlayer.filters.equalizer.length ? audio?.shoukakuPlayer.setLowPass({ smoothing: 20.0 }) : audio?.shoukakuPlayer.setLowPass(null);
-
+        audio?.filters.setSoft(!audio.filters.status.soft);
         await message.channel.send({
             reply: isEligbleReply(message),
             embeds: [
                 new MessageEmbed()
-                    .setDescription(`✅ | ${audio?.shoukakuPlayer.filters.lowPass ? "Enabled" : "Disabled"} soft filter`)
+                    .setDescription(`✅ | ${audio?.filters.status.soft ? "Enabled" : "Disabled"} soft filter`)
                     .setColor("LUMINOUS_VIVID_PINK")
             ]
         });

@@ -13,12 +13,12 @@ import { isEligbleReply } from "../../../utils/isEligbleReply";
 export class clientCommand extends Command {
     async messageRun(message: Message) {
         const audio = this.container.client.audioManager.queue.get(message.guildId!);
-        audio?.shoukakuPlayer.filters.tremolo === null ? audio?.shoukakuPlayer.setTremolo({ frequency: 2.0, depth: 0.5 }) : audio?.shoukakuPlayer.setTremolo(null);
+        audio?.filters.setTrebbleBass(!audio.filters.status.tremolo);
         await message.channel.send({
             reply: isEligbleReply(message),
             embeds: [
                 new MessageEmbed()
-                    .setDescription(`✅ | ${audio?.shoukakuPlayer.filters.tremolo ? "Enabled" : "Disabled"} vibrato filter`)
+                    .setDescription(`✅ | ${audio?.filters.status.tremolo ? "Enabled" : "Disabled"} vibrato filter`)
                     .setColor("LUMINOUS_VIVID_PINK")
             ]
         });
