@@ -7,7 +7,7 @@ import { isEligbleReply } from "../../utils/isEligbleReply";
 @ApplyOptions<CommandOptions>({
     name: "join",
     description: "let bot join current user voice channel",
-    preconditions: ["threadCondition", "onVoiceCondition", "alreadyConnect"],
+    preconditions: ["threadCondition", "isCanConnect", "onVoiceCondition", "alreadyConnect"],
     requiredClientPermissions: ["SEND_MESSAGES", "EMBED_LINKS"]
 })
 

@@ -7,7 +7,7 @@ import { isEligbleReply } from "../../utils/isEligbleReply";
     name: "previous",
     description: "play previous played track",
     aliases: ["back"],
-    preconditions: ["threadCondition", "isQueueExist", "onVoiceCondition", "onSameVoiceCondition"],
+    preconditions: ["threadCondition", "isCanConnect", "isQueueExist", "onVoiceCondition", "onSameVoiceCondition"],
     requiredClientPermissions: ["SEND_MESSAGES", "EMBED_LINKS"]
 })
 

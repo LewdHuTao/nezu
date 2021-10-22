@@ -7,7 +7,7 @@ import { GuildTextBasedChannelTypes } from "@sapphire/discord.js-utilities";
     name: "play",
     aliases: ["p"],
     description: "let bot play best quality music audio",
-    preconditions: ["threadCondition", "onVoiceCondition", "onSameVoiceCondition"],
+    preconditions: ["threadCondition", "isCanConnect", "onVoiceCondition", "onSameVoiceCondition"],
     requiredClientPermissions: ["SEND_MESSAGES"]
 })
 

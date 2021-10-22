@@ -8,7 +8,7 @@ import { GuildTextBasedChannelTypes } from "@sapphire/discord.js-utilities";
 @ApplyOptions<CommandOptions>({
     name: "load",
     description: "load saved playlist and add to the queue",
-    preconditions: ["threadCondition", "onVoiceCondition", "onSameVoiceCondition"],
+    preconditions: ["threadCondition", "isCanConnect", "onVoiceCondition", "onSameVoiceCondition"],
     requiredClientPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
     options: ["id"]
 })
