@@ -1,17 +1,18 @@
 import { Snowflake } from "discord-api-types";
 import { getMongoRepository, MongoRepository } from "typeorm";
 import { config } from "../../utils/parsedConfig";
-import { Cheshire } from "cheshire";
 import { PlaylistTrackSetting } from "../entities/playlistTrack";
 import { ShoukakuTrack } from "shoukaku";
 import crypto from "crypto";
+import Collection from "@discordjs/collection";
 
 export class PlaylistTrackDatabaseManager {
     public repository!: MongoRepository<PlaylistTrackSetting>;
-    public cache: Cheshire<Snowflake, PlaylistTrackSetting> = new Cheshire({ lifetime: config.cacheLifeTime });
+    public cache: Collection<Snowflake, PlaylistTrackSetting> = new Collection();
 
     public _init() {
         this.repository = getMongoRepository(PlaylistTrackSetting);
+        setInterval(() => this.cache.clear(), config.cacheLifeTime)
     }
 
     public async createTrack(userId: Snowflake, playlistId: string, track: ShoukakuTrack): Promise<PlaylistTrackSetting> {

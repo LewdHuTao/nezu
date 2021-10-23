@@ -2,17 +2,18 @@ import { Snowflake } from "discord-api-types";
 import { getMongoRepository, MongoRepository } from "typeorm";
 import { config } from "../../utils/parsedConfig";
 import { GuildSetting } from "../entities/Guild";
-import { Cheshire } from "cheshire";
+import Collection from "@discordjs/collection";
 export class GuildDatabaseManager {
     public repository!: MongoRepository<GuildSetting>;
-    public cache: Cheshire<Snowflake, GuildSetting> = new Cheshire({ lifetime: config.cacheLifeTime });
+    public cache: Collection<Snowflake, GuildSetting> = new Collection();
 
     public _init() {
         this.repository = getMongoRepository(GuildSetting);
+        setInterval(() => this.cache.clear(), config.cacheLifeTime)
     }
 
     public async get(id: Snowflake): Promise<GuildSetting> {
-        if (this.cache.get(id) !== undefined) return this.cache.get(id);
+        if (this.cache.get(id) !== undefined) return this.cache.get(id)!;
         const data = await this.repository.findOne({ id });
         if (!data) {
             const createdData = this.repository.create({ id });

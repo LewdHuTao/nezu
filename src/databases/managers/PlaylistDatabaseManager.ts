@@ -1,16 +1,17 @@
 import { Snowflake } from "discord-api-types";
 import { getMongoRepository, MongoRepository } from "typeorm";
 import { config } from "../../utils/parsedConfig";
-import { Cheshire } from "cheshire";
 import { PlaylistSetting } from "../entities/Playlist";
 import crypto from "crypto";
+import Collection from "@discordjs/collection";
 
 export class PlaylistDatabaseManager {
     public repository!: MongoRepository<PlaylistSetting>;
-    public cache: Cheshire<Snowflake, PlaylistSetting> = new Cheshire({ lifetime: config.cacheLifeTime });
+    public cache: Collection<Snowflake, PlaylistSetting> = new Collection();
 
     public _init() {
         this.repository = getMongoRepository(PlaylistSetting);
+        setInterval(() => this.cache.clear(), config.cacheLifeTime)
     }
 
     public async resolvePlaylist(userId: Snowflake, playlistIdOrName: string): Promise<PlaylistSetting | undefined> {

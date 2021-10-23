@@ -1,9 +1,8 @@
-import { User } from "discord.js";
+import { Collection, User } from "discord.js";
 import { ShoukakuTrackList } from "shoukaku";
 import { audioManager } from "../../audioManager";
 import { Plugin } from "../../utils/Plugin";
 import fetch from "petitio";
-import { Cheshire } from "cheshire/src/Cheshire";
 import { config } from "../../../../utils/parsedConfig";
 import { LavalinkSource } from "shoukaku/types";
 export class Bilibili extends Plugin {
@@ -11,7 +10,7 @@ export class Bilibili extends Plugin {
     public regex = /(?:http:\/\/|https:\/\/|)((www.)|(m.))bilibili.com\/(video)[/:]([A-Za-z0-9]+)/;
     public manager!: audioManager;
     private _resolveTrack!: (query: string, options?: { requester?: User; source?: LavalinkSource }) => Promise<ShoukakuTrackList | null>;
-    public cache: Cheshire<string, any> = new Cheshire({ lifetime: config.cacheLifeTime });
+    public cache: Collection<string, any> = new Collection();
 
     private readonly functions = {
         video: this.getVideo.bind(this)
@@ -19,6 +18,7 @@ export class Bilibili extends Plugin {
 
     public load(manager: audioManager) {
         this.manager = manager;
+        setTimeout(() => this.cache.clear(), config.cacheLifeTime);
         this._resolveTrack = manager.resolveTrack.bind(manager);
         manager.resolveTrack = this.resolveTrack.bind(this);
     }
