@@ -14,7 +14,7 @@ import { audioEmoji } from "../../utils/Constants";
 
 export class clientCommand extends Command {
     async messageRun(message: Message) {
-        if(this.container.client.audioManager.queue.get(message.guildId!).playerTimeout) clearTimeout(this.container.client.audioManager.queue.get(message.guildId!).playerTimeout);
+        if(this.container.client.audioManager.queue.get(message.guildId!)?.playerTimeout) clearTimeout(this.container.client.audioManager.queue.get(message.guildId!)?.playerTimeout!);
         this.container.client.audioManager.queue.get(message.guildId!)?.shoukakuPlayer.connection.disconnect();
         this.container.client.audioManager.queue.delete(message.guildId!);
         await message.channel.send({
