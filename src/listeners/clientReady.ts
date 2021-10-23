@@ -5,6 +5,7 @@ import { Team } from "discord.js";
 import { config } from "../utils/parsedConfig";
 import { createConnection } from "typeorm";
 import { resolve } from "path";
+import { topGG } from "../utils/topGG";
 
 @ApplyOptions<ListenerOptions>({
     name: "ready",
@@ -33,6 +34,14 @@ export class clientListener extends Listener {
             name: `${this.container.client.application?.commands.cache.size ? "+play" : "/play"} | shard ${this.container.client.shard?.ids[0] ?? 1}/${this.container.client.shard?.ids.length ?? 1}`,
             type: this.container.client.application?.commands.cache.size ? "WATCHING" : "LISTENING"
         });
+        setInterval(async () => {
+            await topGG.postStats({
+                serverCount: this.container.client.guilds.cache.size,
+                shardCount: this.container.client.shard?.count ?? 1,
+                shardId: this.container.client.shard?.ids[0],
+                shards: this.container.client.shard?.ids
+            });
+        }, 15000);
         await createConnection({
             database: "database",
             entities: [
