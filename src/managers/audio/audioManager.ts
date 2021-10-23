@@ -40,22 +40,13 @@ export class audioManager extends EventEmitter {
     public async handleJoin(channel: VoiceBasedChannelTypes, textChannel: GuildTextBasedChannelTypes) {
         if (this.queue.has(channel.guildId)) {
             if (this.queue.get(channel.guildId)?.shoukakuPlayer.connection.state === Constants.state.CONNECTED) return this.queue.get(channel.guildId)!;
-            if (this.queue.get(channel.guildId)?.shoukakuPlayer.connection.state !== Constants.state.CONNECTED) {
-                const player = await this.shoukaku.getNode().joinChannel({
+            if (this.queue.get(channel.guildId)?.shoukakuPlayer.connection && this.queue.get(channel.guildId)?.shoukakuPlayer.connection.state !== Constants.state.CONNECTED) {
+                await this.queue.get(channel.guildId)?.shoukakuPlayer.connection.connect({
                     channelId: channel.id,
-                    guildId: channel.guildId,
-                    shardId: channel.guild?.shardId,
+                    guildId: channel.guildId,shardId: channel.guild?.shardId,
                     deaf: true
                 });
-                const oldQueue = this.queue.get(channel.guildId)!;
-                const queue = new queueManager(this, player, textChannel);
-                queue.queueLoop = oldQueue.queueLoop;
-                queue.queueTrack = oldQueue.queueTrack;
-                queue.lastMessage = oldQueue.lastMessage;
-                queue.textChannel = oldQueue.textChannel;
-                queue.trackLoop = oldQueue.trackLoop;
-                this.queue.set(channel.guildId, queue);
-                return queue;
+                return this.queue.get(channel.guildId)!;
             }
         }
         const player = await this.shoukaku.getNode().joinChannel({
