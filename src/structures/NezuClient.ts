@@ -7,8 +7,10 @@ import { GuildDatabaseManager } from "../databases/managers/GuildDatabaseManager
 import { PlaylistDatabaseManager } from "../databases/managers/PlaylistDatabaseManager";
 import { PlaylistTrackDatabaseManager } from "../databases/managers/PlaylistTrackDatabaseManager";
 import { audioManager } from "../managers/audio/audioManager";
+import { AppleMusic } from "../managers/audio/plugins/AppleMusic";
 import { Bilibili } from "../managers/audio/plugins/Bilibili";
 import Spotify from "../managers/audio/plugins/Spotify";
+import { Tidal } from "../managers/audio/plugins/Tidal";
 import { config } from "../utils/parsedConfig";
 
 class NezuClient extends SapphireClient {
@@ -19,6 +21,8 @@ class NezuClient extends SapphireClient {
 
     public audioManager: audioManager = new audioManager(this, {
         plugins: [
+            new AppleMusic(),
+            new Tidal(),
             new Bilibili(),
             new Spotify({
                 cacheTrack: true,

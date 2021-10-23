@@ -20,6 +20,7 @@ export interface configType {
     spotifyClientSecret: string;
     dsnUrl: string;
     topGGToken: string;
+    tidalToken: string;
 }
 
 export interface jsonWeebyFormatText {
