@@ -9,7 +9,7 @@ export class GuildDatabaseManager {
 
     public _init() {
         this.repository = getMongoRepository(GuildSetting);
-        setInterval(() => this.cache.clear(), config.cacheLifeTime)
+        setInterval(() => this.cache.clear(), config.cacheLifeTime);
     }
 
     public async get(id: Snowflake): Promise<GuildSetting> {

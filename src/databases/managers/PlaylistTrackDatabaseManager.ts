@@ -12,7 +12,7 @@ export class PlaylistTrackDatabaseManager {
 
     public _init() {
         this.repository = getMongoRepository(PlaylistTrackSetting);
-        setInterval(() => this.cache.clear(), config.cacheLifeTime)
+        setInterval(() => this.cache.clear(), config.cacheLifeTime);
     }
 
     public async createTrack(userId: Snowflake, playlistId: string, track: ShoukakuTrack): Promise<PlaylistTrackSetting> {

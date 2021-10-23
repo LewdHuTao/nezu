@@ -11,7 +11,7 @@ export class PlaylistDatabaseManager {
 
     public _init() {
         this.repository = getMongoRepository(PlaylistSetting);
-        setInterval(() => this.cache.clear(), config.cacheLifeTime)
+        setInterval(() => this.cache.clear(), config.cacheLifeTime);
     }
 
     public async resolvePlaylist(userId: Snowflake, playlistIdOrName: string): Promise<PlaylistSetting | undefined> {
