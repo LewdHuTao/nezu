@@ -14,8 +14,9 @@ export abstract class isCanConnect extends Precondition {
     }
 
     private shouldRun(message: Message) {
-        if (isVoiceChannel(message.member?.voice.channel) && message.member?.voice.channel?.joinable && message.member?.voice.channel?.speakable) return true;
-        if (isStageChannel(message.member?.voice.channel) && message.member?.voice.channel?.joinable) return true;
+        if(message.guild?.me?.voice.channel) return true;
+        if (isVoiceChannel(message.member?.voice.channel) && !message.guild?.me?.voice.channel && message.member?.voice.channel?.joinable && message.member?.voice.channel?.speakable) return true;
+        if (isStageChannel(message.member?.voice.channel) && !message.guild?.me?.voice.channel && message.member?.voice.channel?.joinable) return true;
         return false;
     }
 }
