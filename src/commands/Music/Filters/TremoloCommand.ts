@@ -7,7 +7,7 @@ import { audioEmoji } from "../../../utils/Constants";
 @ApplyOptions<CommandOptions>({
     name: "vibrato",
     description: "Change current player filters to vibrato",
-    preconditions: ["threadCondition", "isQueueExist", "onVoiceCondition", "onSameVoiceCondition"],
+    preconditions: ["threadCondition", "isVoted", "isQueueExist", "onVoiceCondition", "onSameVoiceCondition"],
     requiredClientPermissions: ["SEND_MESSAGES", "EMBED_LINKS", "USE_EXTERNAL_EMOJIS"]
 })
 

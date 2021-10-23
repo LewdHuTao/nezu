@@ -7,7 +7,7 @@ import { audioEmoji } from "../../../utils/Constants";
 @ApplyOptions<CommandOptions>({
     name: "earrape",
     description: "Change current player filters to earrape",
-    preconditions: ["threadCondition", "isQueueExist", "onVoiceCondition", "onSameVoiceCondition"],
+    preconditions: ["threadCondition", "isVoted", "isQueueExist", "onVoiceCondition", "onSameVoiceCondition"],
     requiredClientPermissions: ["SEND_MESSAGES", "EMBED_LINKS", "USE_EXTERNAL_EMOJIS"]
 })
 

@@ -19,6 +19,7 @@ export interface configType {
     spotifyClientId: string;
     spotifyClientSecret: string;
     dsnUrl: string;
+    topGGToken: string;
 }
 
 export interface jsonWeebyFormatText {

@@ -9,7 +9,7 @@ import { audioEmoji } from "../../../utils/Constants";
 @ApplyOptions<CommandOptions>({
     name: "load",
     description: "load saved playlist and add to the queue",
-    preconditions: ["threadCondition", "isCanConnect", "onVoiceCondition", "onSameVoiceCondition"],
+    preconditions: ["threadCondition", "isVoted", "isCanConnect", "onVoiceCondition", "onSameVoiceCondition"],
     requiredClientPermissions: ["SEND_MESSAGES", "EMBED_LINKS", "USE_EXTERNAL_EMOJIS"],
     options: ["id"]
 })
