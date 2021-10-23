@@ -18,6 +18,7 @@ export interface configType {
     devmode: boolean;
     spotifyClientId: string;
     spotifyClientSecret: string;
+    dsnUrl: string;
 }
 
 export interface jsonWeebyFormatText {
