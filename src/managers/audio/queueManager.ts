@@ -26,7 +26,11 @@ export class queueManager {
     public queueTrack = new queueTrack();
     public queueLoop = false;
     public trackLoop = false;
-    public playing = false;
+
+    public get playing() {
+        return Boolean(this.shoukakuPlayer.position);
+    }
+
     public lastMessage: Message | undefined;
     public filters = new filterManager(this);
 

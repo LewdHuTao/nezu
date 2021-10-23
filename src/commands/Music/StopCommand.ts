@@ -15,7 +15,6 @@ export class clientCommand extends Command {
     async messageRun(message: Message) {
         this.container.client.audioManager.queue.get(message.guildId!)?.queueTrack.clear();
         this.container.client.audioManager.queue.get(message.guildId!)!.queueTrack.current = null;
-        this.container.client.audioManager.queue.get(message.guildId!)!.playing = false;
 
         this.container.client.audioManager.queue.get(message.guildId!)?.shoukakuPlayer.stopTrack();
         await message.channel.send({

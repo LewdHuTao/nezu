@@ -12,7 +12,8 @@ import { ShoukakuTrack } from "shoukaku";
 })
 export class clientListener extends Listener {
     async run(player: queueManager, track: ShoukakuTrack) {
-        this.container.client.logger.info(`${green("[Audio]")} ${magentaBright(`guildId ${player.textChannel.guildId} stopped playing track ${track.track}`)}`);
+        player.shoukakuPlayer.position = 0;
+        if (track) this.container.client.logger.info(`${green("[Audio]")} ${magentaBright(`guildId ${player.textChannel.guildId} stopped playing track ${track.track}`)}`);
         if (player.lastMessage) player.lastMessage.delete().catch(() => undefined);
         if (track && player.trackLoop) {
             if (!player.queueTrack.current) return player.audioManager.emit("queueEnd", player, track);

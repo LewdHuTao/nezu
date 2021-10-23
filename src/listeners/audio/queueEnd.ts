@@ -13,11 +13,9 @@ import { audioEmoji } from "../../utils/Constants";
 })
 export class clientListener extends Listener {
     async run(player: queueManager, track: ShoukakuTrack) {
-        player.playing = false;
         player.queueTrack.current = null;
         player.queueTrack.previous = track ?? null;
         if (player.lastMessage) player.lastMessage.delete().catch(() => undefined);
-
         const msg = await player.textChannel.send({
             embeds: [
                 new MessageEmbed()

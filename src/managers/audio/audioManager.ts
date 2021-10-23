@@ -43,7 +43,7 @@ export class audioManager extends EventEmitter {
             if (this.queue.get(channel.guildId)?.shoukakuPlayer.connection && this.queue.get(channel.guildId)?.shoukakuPlayer.connection.state !== Constants.state.CONNECTED) {
                 await this.queue.get(channel.guildId)?.shoukakuPlayer.connection.connect({
                     channelId: channel.id,
-                    guildId: channel.guildId,shardId: channel.guild?.shardId,
+                    guildId: channel.guildId, shardId: channel.guild?.shardId,
                     deaf: true
                 });
                 return this.queue.get(channel.guildId)!;
