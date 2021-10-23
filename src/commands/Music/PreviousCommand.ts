@@ -3,6 +3,7 @@ import { ApplyOptions } from "@sapphire/decorators";
 import { Message, MessageEmbed } from "discord.js";
 import { isEligbleReply } from "../../utils/isEligbleReply";
 import { audioEmoji } from "../../utils/Constants";
+import { inlineCode } from "@discordjs/builders";
 
 @ApplyOptions<CommandOptions>({
     name: "previous",
@@ -32,7 +33,7 @@ export class clientCommand extends Command {
             reply: isEligbleReply(message),
             embeds: [
                 new MessageEmbed()
-                    .setDescription(`${audioEmoji.CHECK_MARK} | Played previous track ${audio.queueTrack.previous.info.title}`)
+                    .setDescription(`${audioEmoji.CHECK_MARK} | Playing previous track ${inlineCode(audio.queueTrack.previous.info.title!)}`)
                     .setColor("LUMINOUS_VIVID_PINK")
             ]
         });
