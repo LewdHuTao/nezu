@@ -5,13 +5,14 @@ import { isGuildBasedChannel, PaginatedMessage } from "@sapphire/discord.js-util
 import { Chunk } from "../../utils/Chunk";
 import { joinArray } from "../../utils/joinArray";
 import { isEligbleReply } from "../../utils/isEligbleReply";
+import { audioEmoji } from "../../utils/Constants";
 
 @ApplyOptions<CommandOptions>({
     name: "queue",
     description: "Get server current queue",
     aliases: ["q"],
     preconditions: ["threadCondition", "isQueueExist"],
-    requiredClientPermissions: ["SEND_MESSAGES", "EMBED_LINKS"]
+    requiredClientPermissions: ["SEND_MESSAGES", "EMBED_LINKS", "USE_EXTERNAL_EMOJIS"]
 })
 
 export class clientCommand extends Command {
@@ -22,7 +23,7 @@ export class clientCommand extends Command {
                 reply: isEligbleReply(message),
                 embeds: [
                     new MessageEmbed()
-                        .setDescription(`🚫 | Current queue is less than 1 track`)
+                        .setDescription(`${audioEmoji.CROSS_MARK} | Current queue is less than 1 track`)
                         .setColor("LUMINOUS_VIVID_PINK")
                 ]
             });

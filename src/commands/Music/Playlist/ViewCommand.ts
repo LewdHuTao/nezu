@@ -6,12 +6,13 @@ import { isGuildBasedChannel, PaginatedMessage } from "@sapphire/discord.js-util
 import { Chunk } from "../../../utils/Chunk";
 import { joinArray } from "../../../utils/joinArray";
 import { inlineCode } from "@discordjs/builders";
+import { audioEmoji } from "../../../utils/Constants";
 
 @ApplyOptions<CommandOptions>({
     name: "view",
     description: "view track in saved playlist",
     preconditions: ["threadCondition"],
-    requiredClientPermissions: ["SEND_MESSAGES", "EMBED_LINKS"]
+    requiredClientPermissions: ["SEND_MESSAGES", "EMBED_LINKS", "USE_EXTERNAL_EMOJIS"]
 })
 
 export class clientCommand extends Command {
@@ -22,7 +23,7 @@ export class clientCommand extends Command {
                 reply: isEligbleReply(message),
                 embeds: [
                     new MessageEmbed()
-                        .setDescription(`❌ | Please input valid playlistId/name.`)
+                        .setDescription(`${audioEmoji.CROSS_MARK} | Please input valid playlistId/name.`)
                         .setColor("LUMINOUS_VIVID_PINK")
                 ]
             });
@@ -33,7 +34,7 @@ export class clientCommand extends Command {
                 reply: isEligbleReply(message),
                 embeds: [
                     new MessageEmbed()
-                        .setDescription(`❌ | Could not find playlist with provided playlistId/name.`)
+                        .setDescription(`${audioEmoji.CROSS_MARK} | Could not find playlist with provided playlistId/name.`)
                         .setColor("LUMINOUS_VIVID_PINK")
                 ]
             });
@@ -44,7 +45,7 @@ export class clientCommand extends Command {
                 reply: isEligbleReply(message),
                 embeds: [
                     new MessageEmbed()
-                        .setDescription(`❌ | Requested playlist is empty.`)
+                        .setDescription(`${audioEmoji.CROSS_MARK} | Requested playlist is empty.`)
                         .setColor("LUMINOUS_VIVID_PINK")
                 ]
             });

@@ -4,12 +4,13 @@ import { Message, MessageEmbed } from "discord.js";
 import { isEligbleReply } from "../../../utils/isEligbleReply";
 import { inlineCode } from "@discordjs/builders";
 import { GuildTextBasedChannelTypes } from "@sapphire/discord.js-utilities";
+import { audioEmoji } from "../../../utils/Constants";
 
 @ApplyOptions<CommandOptions>({
     name: "load",
     description: "load saved playlist and add to the queue",
     preconditions: ["threadCondition", "isCanConnect", "onVoiceCondition", "onSameVoiceCondition"],
-    requiredClientPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
+    requiredClientPermissions: ["SEND_MESSAGES", "EMBED_LINKS", "USE_EXTERNAL_EMOJIS"],
     options: ["id"]
 })
 
@@ -21,7 +22,7 @@ export class clientCommand extends Command {
                 reply: isEligbleReply(message),
                 embeds: [
                     new MessageEmbed()
-                        .setDescription(`❌ | Please input valid playlistId/name.`)
+                        .setDescription(`${audioEmoji.CROSS_MARK} | Please input valid playlistId/name.`)
                         .setColor("LUMINOUS_VIVID_PINK")
                 ]
             });
@@ -32,7 +33,7 @@ export class clientCommand extends Command {
                 reply: isEligbleReply(message),
                 embeds: [
                     new MessageEmbed()
-                        .setDescription(`❌ | Could not find playlist with provided playlistId/name.`)
+                        .setDescription(`${audioEmoji.CROSS_MARK} | Could not find playlist with provided playlistId/name.`)
                         .setColor("LUMINOUS_VIVID_PINK")
                 ]
             });
@@ -43,7 +44,7 @@ export class clientCommand extends Command {
                 reply: isEligbleReply(message),
                 embeds: [
                     new MessageEmbed()
-                        .setDescription(`❌ | Requested playlist is empty.`)
+                        .setDescription(`${audioEmoji.CROSS_MARK} | Requested playlist is empty.`)
                         .setColor("LUMINOUS_VIVID_PINK")
                 ]
             });
@@ -59,7 +60,7 @@ export class clientCommand extends Command {
             reply: isEligbleReply(message),
             embeds: [
                 new MessageEmbed()
-                    .setDescription(`✅ | Added playlist ${inlineCode(getPlaylist.playlistName)} to the queue!`)
+                    .setDescription(`${audioEmoji.CHECK_MARK} | Added playlist ${inlineCode(getPlaylist.playlistName)} to the queue!`)
                     .setColor("LUMINOUS_VIVID_PINK")
             ]
         });

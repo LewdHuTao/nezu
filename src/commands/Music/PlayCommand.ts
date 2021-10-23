@@ -2,13 +2,14 @@ import { CommandOptions, Command, Args } from "@sapphire/framework";
 import { ApplyOptions } from "@sapphire/decorators";
 import { Message, MessageEmbed } from "discord.js";
 import { GuildTextBasedChannelTypes } from "@sapphire/discord.js-utilities";
+import { audioEmoji } from "../../utils/Constants";
 
 @ApplyOptions<CommandOptions>({
     name: "play",
     aliases: ["p"],
     description: "let bot play best quality music audio",
     preconditions: ["threadCondition", "isCanConnect", "onVoiceCondition", "onSameVoiceCondition"],
-    requiredClientPermissions: ["SEND_MESSAGES"]
+    requiredClientPermissions: ["SEND_MESSAGES", "EMBED_LINKS", "USE_EXTERNAL_EMOJIS"]
 })
 
 export class clientCommand extends Command {
@@ -18,7 +19,7 @@ export class clientCommand extends Command {
             return message.channel.send({
                 embeds: [
                     new MessageEmbed()
-                        .setDescription(`❌ | You must input track name/url`)
+                        .setDescription(`${audioEmoji.CROSS_MARK} | You must input track name/url`)
                         .setColor("LUMINOUS_VIVID_PINK")
                 ]
             });
@@ -29,7 +30,7 @@ export class clientCommand extends Command {
             return message.channel.send({
                 embeds: [
                     new MessageEmbed()
-                        .setDescription(`❌ | Could not find any results`)
+                        .setDescription(`${audioEmoji.CROSS_MARK} | Could not find any results`)
                         .setColor("LUMINOUS_VIVID_PINK")
                 ]
             });
@@ -39,7 +40,7 @@ export class clientCommand extends Command {
             await message.channel.send({
                 embeds: [
                     new MessageEmbed()
-                        .setDescription(`✅ | Added \`${track.playlistName}\` to the queue`)
+                        .setDescription(`${audioEmoji.CHECK_MARK} | Added \`${track.playlistName}\` to the queue`)
                         .setColor("LUMINOUS_VIVID_PINK")
                 ]
             });
@@ -48,7 +49,7 @@ export class clientCommand extends Command {
             await message.channel.send({
                 embeds: [
                     new MessageEmbed()
-                        .setDescription(`✅ | Added \`${track.tracks[0].info.title}\` to the queue`)
+                        .setDescription(`${audioEmoji.CHECK_MARK} | Added \`${track.tracks[0].info.title}\` to the queue`)
                         .setColor("LUMINOUS_VIVID_PINK")
                 ]
             });

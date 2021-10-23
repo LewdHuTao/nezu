@@ -4,11 +4,12 @@ import { Message, MessageEmbed } from "discord.js";
 import { isEligbleReply } from "../../../utils/isEligbleReply";
 import { inlineCode } from "@discordjs/builders";
 import { SubCommandPluginCommand } from "@sapphire/plugin-subcommands";
+import { audioEmoji } from "../../../utils/Constants";
 @ApplyOptions<SubCommandPluginCommand.Options>({
     name: "delete",
     description: "Delete unwanted track in playlist",
     preconditions: ["threadCondition"],
-    requiredClientPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
+    requiredClientPermissions: ["SEND_MESSAGES", "EMBED_LINKS", "USE_EXTERNAL_EMOJIS"],
     subCommands: ["track", "playlist", { input: "show", default: true }]
 })
 
@@ -18,7 +19,7 @@ export class clientCommand extends SubCommandPluginCommand {
             reply: isEligbleReply(message),
             embeds: [
                 new MessageEmbed()
-                    .setDescription(`❌ | Please input valid argument, example: ${args.commandContext.prefix}delete track 7c483fbf`)
+                    .setDescription(`${audioEmoji.CROSS_MARK} | Please input valid argument, example: ${args.commandContext.prefix}delete track 7c483fbf`)
                     .setColor("LUMINOUS_VIVID_PINK")
             ]
         });
@@ -31,7 +32,7 @@ export class clientCommand extends SubCommandPluginCommand {
                 reply: isEligbleReply(message),
                 embeds: [
                     new MessageEmbed()
-                        .setDescription(`❌ | Please input valid playlistname/Id`)
+                        .setDescription(`${audioEmoji.CROSS_MARK} | Please input valid playlistname/Id`)
                         .setColor("LUMINOUS_VIVID_PINK")
                 ]
             });
@@ -48,7 +49,7 @@ export class clientCommand extends SubCommandPluginCommand {
             reply: isEligbleReply(message),
             embeds: [
                 new MessageEmbed()
-                    .setDescription(`✅ | Deleted ${inlineCode(playlistId)} playlist`)
+                    .setDescription(`${audioEmoji.CHECK_MARK} | Deleted ${inlineCode(playlistId)} playlist`)
                     .setColor("LUMINOUS_VIVID_PINK")
             ]
         });
@@ -61,7 +62,7 @@ export class clientCommand extends SubCommandPluginCommand {
                 reply: isEligbleReply(message),
                 embeds: [
                     new MessageEmbed()
-                        .setDescription(`❌ | Please input valid trackId`)
+                        .setDescription(`${audioEmoji.CROSS_MARK} | Please input valid trackId`)
                         .setColor("LUMINOUS_VIVID_PINK")
                 ]
             });
@@ -72,7 +73,7 @@ export class clientCommand extends SubCommandPluginCommand {
                 reply: isEligbleReply(message),
                 embeds: [
                     new MessageEmbed()
-                        .setDescription(`❌ | Track with id ${inlineCode(trackId)} does not exist.`)
+                        .setDescription(`${audioEmoji.CROSS_MARK} | Track with id ${inlineCode(trackId)} does not exist.`)
                         .setColor("LUMINOUS_VIVID_PINK")
                 ]
             });
@@ -82,7 +83,7 @@ export class clientCommand extends SubCommandPluginCommand {
             reply: isEligbleReply(message),
             embeds: [
                 new MessageEmbed()
-                    .setDescription(`✅ | Deleted track with id ${inlineCode(trackId)}`)
+                    .setDescription(`${audioEmoji.CHECK_MARK} | Deleted track with id ${inlineCode(trackId)}`)
                     .setColor("LUMINOUS_VIVID_PINK")
             ]
         });

@@ -6,12 +6,13 @@ import { isGuildBasedChannel, PaginatedMessage } from "@sapphire/discord.js-util
 import { Chunk } from "../../../utils/Chunk";
 import { joinArray } from "../../../utils/joinArray";
 import { inlineCode } from "@discordjs/builders";
+import { audioEmoji } from "../../../utils/Constants";
 
 @ApplyOptions<CommandOptions>({
     name: "list",
     description: "list saved playlist",
     preconditions: ["threadCondition"],
-    requiredClientPermissions: ["SEND_MESSAGES", "EMBED_LINKS"]
+    requiredClientPermissions: ["SEND_MESSAGES", "EMBED_LINKS", "USE_EXTERNAL_EMOJIS"]
 })
 
 export class clientCommand extends Command {
@@ -22,7 +23,7 @@ export class clientCommand extends Command {
                 reply: isEligbleReply(message),
                 embeds: [
                     new MessageEmbed()
-                        .setDescription(`❌ |You dont have any playlist.`)
+                        .setDescription(`${audioEmoji.CROSS_MARK} |You dont have any playlist.`)
                         .setColor("LUMINOUS_VIVID_PINK")
                 ]
             });

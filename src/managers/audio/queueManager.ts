@@ -38,6 +38,6 @@ export class queueManager {
             resolvedTrack.tracks[0].requester = this.queueTrack.current!.requester;
             this.queueTrack.current!.track = resolvedTrack.tracks[0].track;
         }
-        return this.shoukakuPlayer.playTrack(track ?? this.queueTrack.current!.track, options);
+        return this.shoukakuPlayer.playTrack(track ?? this.queueTrack.current?.track!, options);
     }
 }

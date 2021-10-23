@@ -2,13 +2,14 @@ import { CommandOptions, Command } from "@sapphire/framework";
 import { ApplyOptions } from "@sapphire/decorators";
 import { Message, MessageEmbed } from "discord.js";
 import { isEligbleReply } from "../../utils/isEligbleReply";
+import { audioEmoji } from "../../utils/Constants";
 
 @ApplyOptions<CommandOptions>({
     name: "disconnect",
     description: "stop and disconnect bot from the voice",
     aliases: ["dc"],
     preconditions: ["threadCondition", "isQueueExist", "onVoiceCondition", "onSameVoiceCondition"],
-    requiredClientPermissions: ["SEND_MESSAGES", "EMBED_LINKS"]
+    requiredClientPermissions: ["SEND_MESSAGES", "EMBED_LINKS", "USE_EXTERNAL_EMOJIS"]
 })
 
 export class clientCommand extends Command {
@@ -19,7 +20,7 @@ export class clientCommand extends Command {
             reply: isEligbleReply(message),
             embeds: [
                 new MessageEmbed()
-                    .setDescription(`✅ | Disconnected from ${message.member?.voice.channel!.toString()} voice channel`)
+                    .setDescription(`${audioEmoji.CHECK_MARK} | Disconnected from ${message.member?.voice.channel!.toString()} voice channel`)
                     .setColor("LUMINOUS_VIVID_PINK")
             ]
         });

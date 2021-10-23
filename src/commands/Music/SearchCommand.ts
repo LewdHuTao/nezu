@@ -4,12 +4,13 @@ import { Message, MessageActionRow, MessageEmbed, MessageSelectMenu } from "disc
 import { GuildTextBasedChannelTypes } from "@sapphire/discord.js-utilities";
 import ms from "ms";
 import { inlineCode } from "@discordjs/builders";
+import { audioEmoji } from "../../utils/Constants";
 
 @ApplyOptions<CommandOptions>({
     name: "search",
     description: "search track and add to the queue",
     preconditions: ["threadCondition", "onVoiceCondition", "onSameVoiceCondition"],
-    requiredClientPermissions: ["SEND_MESSAGES", "EMBED_LINKS"]
+    requiredClientPermissions: ["SEND_MESSAGES", "EMBED_LINKS", "USE_EXTERNAL_EMOJIS"]
 })
 
 export class clientCommand extends Command {
@@ -21,7 +22,7 @@ export class clientCommand extends Command {
             return message.channel.send({
                 embeds: [
                     new MessageEmbed()
-                        .setDescription(`❌ | Result doesnot match search type`)
+                        .setDescription(`${audioEmoji.CROSS_MARK} | Result doesnot match search type`)
                         .setColor("LUMINOUS_VIVID_PINK")
                 ]
             });
@@ -30,7 +31,7 @@ export class clientCommand extends Command {
             await message.channel.send({
                 embeds: [
                     new MessageEmbed()
-                        .setDescription(`✅ | Added \`${track.playlistName}\` to the queue`)
+                        .setDescription(`${audioEmoji.CHECK_MARK} | Added \`${track.playlistName}\` to the queue`)
                         .setColor("LUMINOUS_VIVID_PINK")
                 ]
             });
@@ -39,7 +40,7 @@ export class clientCommand extends Command {
             await message.channel.send({
                 embeds: [
                     new MessageEmbed()
-                        .setDescription(`✅ | Added \`${track.tracks[0].info.title}\` to the queue`)
+                        .setDescription(`${audioEmoji.CHECK_MARK} | Added \`${track.tracks[0].info.title}\` to the queue`)
                         .setColor("LUMINOUS_VIVID_PINK")
                 ]
             });
@@ -61,7 +62,7 @@ export class clientCommand extends Command {
                 components: [row],
                 embeds: [
                     new MessageEmbed()
-                        .setDescription("✅ | Select music between 1-10, you have 20 seconds to decide.")
+                        .setDescription(`${audioEmoji.CHECK_MARK} | Select music between 1-10, you have 20 seconds to decide.`)
                         .setColor("LUMINOUS_VIVID_PINK")
                 ]
             });
@@ -81,7 +82,7 @@ export class clientCommand extends Command {
                 await collectMessage.edit({
                     embeds: [
                         new MessageEmbed()
-                            .setDescription(`✅ Added ${inlineCode(musicTrack.info.title!)} to the queue`)
+                            .setDescription(`${audioEmoji.CHECK_MARK} Added ${inlineCode(musicTrack.info.title!)} to the queue`)
                             .setColor("LUMINOUS_VIVID_PINK")
                     ],
                     components: []
@@ -93,7 +94,7 @@ export class clientCommand extends Command {
                     await collectMessage.edit({
                         embeds: [
                             new MessageEmbed()
-                                .setDescription("❌ | You didnt select requested track, track selection canceled")
+                                .setDescription(`${audioEmoji.CROSS_MARK} | You didnt select requested track, track selection canceled`)
                                 .setColor("LUMINOUS_VIVID_PINK")
                         ],
                         components: []

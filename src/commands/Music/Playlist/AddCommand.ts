@@ -3,12 +3,13 @@ import { ApplyOptions } from "@sapphire/decorators";
 import { Message, MessageEmbed } from "discord.js";
 import { isEligbleReply } from "../../../utils/isEligbleReply";
 import { inlineCode } from "@discordjs/builders";
+import { audioEmoji } from "../../../utils/Constants";
 
 @ApplyOptions<CommandOptions>({
     name: "add",
     description: "Add track to saved playlist",
     preconditions: ["threadCondition"],
-    requiredClientPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
+    requiredClientPermissions: ["SEND_MESSAGES", "EMBED_LINKS", "USE_EXTERNAL_EMOJIS"],
     options: ["id"]
 })
 
@@ -21,7 +22,7 @@ export class clientCommand extends Command {
                 reply: isEligbleReply(message),
                 embeds: [
                     new MessageEmbed()
-                        .setDescription(`❌ | Please input valid playlistId.`)
+                        .setDescription(`${audioEmoji.CROSS_MARK} | Please input valid playlistId.`)
                         .setColor("LUMINOUS_VIVID_PINK")
                 ]
             });
@@ -31,7 +32,7 @@ export class clientCommand extends Command {
                 reply: isEligbleReply(message),
                 embeds: [
                     new MessageEmbed()
-                        .setDescription(`❌ | Please input track name/url.`)
+                        .setDescription(`${audioEmoji.CROSS_MARK} | Please input track name/url.`)
                         .setColor("LUMINOUS_VIVID_PINK")
                 ]
             });
@@ -42,7 +43,7 @@ export class clientCommand extends Command {
                 reply: isEligbleReply(message),
                 embeds: [
                     new MessageEmbed()
-                        .setDescription(`❌ | Could not find playlist with provided playlist id.`)
+                        .setDescription(`${audioEmoji.CROSS_MARK} | Could not find playlist with provided playlist id.`)
                         .setColor("LUMINOUS_VIVID_PINK")
                 ]
             });
@@ -53,7 +54,7 @@ export class clientCommand extends Command {
                 reply: isEligbleReply(message),
                 embeds: [
                     new MessageEmbed()
-                        .setDescription(`❌ | Could not find any tracks.`)
+                        .setDescription(`${audioEmoji.CROSS_MARK} | Could not find any tracks.`)
                         .setColor("LUMINOUS_VIVID_PINK")
                 ]
             });
@@ -64,7 +65,7 @@ export class clientCommand extends Command {
                 reply: isEligbleReply(message),
                 embeds: [
                     new MessageEmbed()
-                        .setDescription(`❌ | Only 20 tracks allowed per playlist.`)
+                        .setDescription(`${audioEmoji.CROSS_MARK} | Only 20 tracks allowed per playlist.`)
                         .setColor("LUMINOUS_VIVID_PINK")
                 ]
             });
@@ -78,7 +79,7 @@ export class clientCommand extends Command {
                 reply: isEligbleReply(message),
                 embeds: [
                     new MessageEmbed()
-                        .setDescription(`✅ | Added ${inlineCode(shoukakuTrack.playlistName!)} to the ${inlineCode(getPlaylist.playlistName)} playlist.`)
+                        .setDescription(`${audioEmoji.CHECK_MARK} | Added ${inlineCode(shoukakuTrack.playlistName!)} to the ${inlineCode(getPlaylist.playlistName)} playlist.`)
                         .setColor("LUMINOUS_VIVID_PINK")
                 ]
             });
@@ -88,7 +89,7 @@ export class clientCommand extends Command {
             reply: isEligbleReply(message),
             embeds: [
                 new MessageEmbed()
-                    .setDescription(`✅ | Added ${inlineCode(shoukakuTrack.tracks[0].info.title!)} to the ${inlineCode(getPlaylist.playlistName)} playlist.`)
+                    .setDescription(`${audioEmoji.CHECK_MARK} | Added ${inlineCode(shoukakuTrack.tracks[0].info.title!)} to the ${inlineCode(getPlaylist.playlistName)} playlist.`)
                     .setColor("LUMINOUS_VIVID_PINK")
             ]
         });

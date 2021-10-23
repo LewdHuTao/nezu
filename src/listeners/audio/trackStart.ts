@@ -4,6 +4,7 @@ import { green, magentaBright } from "colorette";
 import { Client, MessageEmbed } from "discord.js";
 import { queueManager } from "../../managers/audio/queueManager";
 import { ShoukakuTrack } from "shoukaku";
+import { audioEmoji } from "../../utils/Constants";
 
 @ApplyOptions<ListenerOptions>({
     name: "trackStart",
@@ -19,7 +20,7 @@ export class clientListener extends Listener {
         const msg = await player.textChannel.send({
             embeds: [
                 new MessageEmbed()
-                    .setDescription(`▶ | Now playing \`${track.info.title!}\` [${track.requester!}]`)
+                    .setDescription(`${audioEmoji.PLAY} | Now playing \`${track.info.title!}\` [${track.requester!}]`)
                     .setColor("LUMINOUS_VIVID_PINK")
             ]
         });

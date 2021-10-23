@@ -3,12 +3,13 @@ import { ApplyOptions } from "@sapphire/decorators";
 import { Message, MessageEmbed } from "discord.js";
 import { GuildTextBasedChannelTypes } from "@sapphire/discord.js-utilities";
 import { isEligbleReply } from "../../utils/isEligbleReply";
+import { audioEmoji } from "../../utils/Constants";
 
 @ApplyOptions<CommandOptions>({
     name: "join",
     description: "let bot join current user voice channel",
     preconditions: ["threadCondition", "isCanConnect", "onVoiceCondition", "alreadyConnect"],
-    requiredClientPermissions: ["SEND_MESSAGES", "EMBED_LINKS"]
+    requiredClientPermissions: ["SEND_MESSAGES", "EMBED_LINKS", "USE_EXTERNAL_EMOJIS"]
 })
 
 export class clientCommand extends Command {
@@ -18,7 +19,7 @@ export class clientCommand extends Command {
             reply: isEligbleReply(message),
             embeds: [
                 new MessageEmbed()
-                    .setDescription(`✅ | Joined ${message.member?.voice.channel!.toString()} voice channel`)
+                    .setDescription(`${audioEmoji.CHECK_MARK} | Joined ${message.member?.voice.channel!.toString()} voice channel`)
                     .setColor("LUMINOUS_VIVID_PINK")
             ]
         });

@@ -4,6 +4,7 @@ import { green, magentaBright } from "colorette";
 import { Client, MessageEmbed } from "discord.js";
 import { ShoukakuTrack } from "shoukaku";
 import { queueManager } from "../../managers/audio/queueManager";
+import { audioEmoji } from "../../utils/Constants";
 
 @ApplyOptions<ListenerOptions>({
     name: "queueEnd",
@@ -14,13 +15,13 @@ export class clientListener extends Listener {
     async run(player: queueManager, track: ShoukakuTrack) {
         player.playing = false;
         player.queueTrack.current = null;
-        player.queueTrack.previous = track;
+        player.queueTrack.previous = track ?? null;
         if (player.lastMessage) player.lastMessage.delete().catch(() => undefined);
 
         const msg = await player.textChannel.send({
             embeds: [
                 new MessageEmbed()
-                    .setDescription(`✅ | The music queue has run out, request a song to play another song`)
+                    .setDescription(`${audioEmoji.CHECK_MARK} | The music queue has run out, request a song to play another song`)
                     .setColor("LUMINOUS_VIVID_PINK")
             ]
         });
@@ -34,7 +35,7 @@ export class clientListener extends Listener {
             player.textChannel.send({
                 embeds: [
                     new MessageEmbed()
-                        .setDescription(`✅ | I've been inactive for 3 minutes, destroying player`)
+                        .setDescription(`${audioEmoji.CHECK_MARK} | I've been inactive for 3 minutes, destroying player`)
                         .setColor("LUMINOUS_VIVID_PINK")
                 ]
             /* eslint @typescript-eslint/no-empty-function: "off" */

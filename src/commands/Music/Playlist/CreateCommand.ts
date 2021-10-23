@@ -3,12 +3,13 @@ import { ApplyOptions } from "@sapphire/decorators";
 import { Message, MessageEmbed } from "discord.js";
 import { isEligbleReply } from "../../../utils/isEligbleReply";
 import { inlineCode } from "@discordjs/builders";
+import { audioEmoji } from "../../../utils/Constants";
 
 @ApplyOptions<CommandOptions>({
     name: "create",
     description: "Create and save your own personal playlist",
     preconditions: ["threadCondition"],
-    requiredClientPermissions: ["SEND_MESSAGES", "EMBED_LINKS"]
+    requiredClientPermissions: ["SEND_MESSAGES", "EMBED_LINKS", "USE_EXTERNAL_EMOJIS"]
 })
 
 export class clientCommand extends Command {
@@ -19,7 +20,7 @@ export class clientCommand extends Command {
                 reply: isEligbleReply(message),
                 embeds: [
                     new MessageEmbed()
-                        .setDescription(`❌ | Playlist name only can be number or letter, maximum length 15 characters.`)
+                        .setDescription(`${audioEmoji.CROSS_MARK} | Playlist name only can be number or letter, maximum length 15 characters.`)
                         .setColor("LUMINOUS_VIVID_PINK")
                 ]
             });
@@ -30,7 +31,7 @@ export class clientCommand extends Command {
                 reply: isEligbleReply(message),
                 embeds: [
                     new MessageEmbed()
-                        .setDescription(`❌ | Sorry you only can create 5 playlist.`)
+                        .setDescription(`${audioEmoji.CROSS_MARK} | Sorry you only can create 5 playlist.`)
                         .setColor("LUMINOUS_VIVID_PINK")
                 ]
             });
@@ -41,7 +42,7 @@ export class clientCommand extends Command {
                 reply: isEligbleReply(message),
                 embeds: [
                     new MessageEmbed()
-                        .setDescription(`❌ | Sorry you cant create playlist with same name.`)
+                        .setDescription(`${audioEmoji.CROSS_MARK} | Sorry you cant create playlist with same name.`)
                         .setColor("LUMINOUS_VIVID_PINK")
                 ]
             });
@@ -51,7 +52,7 @@ export class clientCommand extends Command {
             reply: isEligbleReply(message),
             embeds: [
                 new MessageEmbed()
-                    .setDescription(`✅ | Created playlist with name ${inlineCode(createdPlaylist.playlistName)}`)
+                    .setDescription(`${audioEmoji.CHECK_MARK} | Created playlist with name ${inlineCode(createdPlaylist.playlistName)}`)
                     .setFooter(`playlistId: ${createdPlaylist.playlistId}`)
                     .setColor("LUMINOUS_VIVID_PINK")
             ]

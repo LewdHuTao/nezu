@@ -2,12 +2,14 @@ import { CommandOptions, Command } from "@sapphire/framework";
 import { ApplyOptions } from "@sapphire/decorators";
 import { Message, MessageEmbed } from "discord.js";
 import { isEligbleReply } from "../../utils/isEligbleReply";
+import { inlineCode } from "@discordjs/builders";
+import { audioEmoji } from "../../utils/Constants";
 
 @ApplyOptions<CommandOptions>({
     name: "replay",
     description: "replay current played track",
     preconditions: ["threadCondition", "isCanConnect", "isQueueExist", "onVoiceCondition", "onSameVoiceCondition"],
-    requiredClientPermissions: ["SEND_MESSAGES", "EMBED_LINKS"]
+    requiredClientPermissions: ["SEND_MESSAGES", "EMBED_LINKS", "USE_EXTERNAL_EMOJIS"]
 })
 
 export class clientCommand extends Command {
@@ -18,17 +20,17 @@ export class clientCommand extends Command {
                 reply: isEligbleReply(message),
                 embeds: [
                     new MessageEmbed()
-                        .setDescription(`🚫 | Could not find current played track`)
+                        .setDescription(`🚫 | Could not find current playing track`)
                         .setColor("LUMINOUS_VIVID_PINK")
                 ]
             });
         }
-        await audio.play(audio.queueTrack.current.track);
+        audio.shoukakuPlayer.seekTo(0);
         await message.channel.send({
             reply: isEligbleReply(message),
             embeds: [
                 new MessageEmbed()
-                    .setDescription(`✅ | Replayed current track ${audio.queueTrack.current.info.title}`)
+                    .setDescription(`${audioEmoji.CHECK_MARK} | Replayed current track ${inlineCode(audio.queueTrack.current.info.title!)}`)
                     .setColor("LUMINOUS_VIVID_PINK")
             ]
         });

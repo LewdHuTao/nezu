@@ -3,13 +3,14 @@ import { ApplyOptions } from "@sapphire/decorators";
 import { Message, MessageEmbed } from "discord.js";
 import { isEligbleReply } from "../../utils/isEligbleReply";
 import { inlineCode } from "@discordjs/builders";
+import { audioEmoji } from "../../utils/Constants";
 
 @ApplyOptions<CommandOptions>({
     name: "nowplaying",
     description: "Get current playing track",
     aliases: ["np", "current", "nowplay"],
     preconditions: ["threadCondition", "isQueueExist", "onVoiceCondition", "onSameVoiceCondition"],
-    requiredClientPermissions: ["SEND_MESSAGES", "EMBED_LINKS"]
+    requiredClientPermissions: ["SEND_MESSAGES", "EMBED_LINKS", "USE_EXTERNAL_EMOJIS"]
 })
 
 export class clientCommand extends Command {
@@ -20,7 +21,7 @@ export class clientCommand extends Command {
                 reply: isEligbleReply(message),
                 embeds: [
                     new MessageEmbed()
-                        .setDescription(`🚫 | There are no playing track`)
+                        .setDescription(`${audioEmoji.CROSS_MARK} | There are no playing track`)
                         .setColor("LUMINOUS_VIVID_PINK")
                 ]
             });
