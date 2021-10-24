@@ -34,6 +34,7 @@ export class clientListener extends Listener {
             name: `${this.container.client.application?.commands.cache.size ? "+play" : "/play"} | shard ${this.container.client.shard?.ids[0] ?? 1}/${this.container.client.shard?.ids.length ?? 1}`,
             type: this.container.client.application?.commands.cache.size ? "WATCHING" : "LISTENING"
         });
+        await this.container.stores.get("contextCommands").registerContext();
         setInterval(async () => {
             await topGG.postStats({
                 serverCount: this.container.client.guilds.cache.size,

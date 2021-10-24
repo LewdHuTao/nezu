@@ -1,5 +1,6 @@
 import { Snowflake } from "discord.js";
 import { NodeOptions } from "shoukaku/types";
+import { ContextCommandStore } from "../libs/contexies/ContextCommandStore";
 
 export interface configType {
     bot: {
@@ -27,4 +28,11 @@ export interface jsonWeebyFormatText {
     status: number;
     format: string;
     output: string;
+}
+
+
+declare module "@sapphire/framework" {
+    interface StoreRegistryEntries {
+        contextCommands: ContextCommandStore;
+    }
 }
