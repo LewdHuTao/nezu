@@ -18,7 +18,7 @@ export class Bilibili extends Plugin {
 
     public load(manager: audioManager) {
         this.manager = manager;
-        setTimeout(() => this.cache.clear(), config.cacheLifeTime);
+        setInterval(() => this.cache.clear(), config.cacheLifeTime);
         this._resolveTrack = manager.resolveTrack.bind(manager);
         manager.resolveTrack = this.resolveTrack.bind(this);
     }
