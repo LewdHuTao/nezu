@@ -11,9 +11,10 @@ export class ContextCommandStore extends Store<ContextCommand> {
         const contextCommands = this.container.stores.get("contextCommands")!;
         const applicationCommandsCache = await this.container.client.application?.commands.fetch();
         for (const contextCommand of [...contextCommands.values()]) {
-            if (applicationCommandsCache?.filter(x => x.name === contextCommand.name).size) return;
-            // @ts-expect-error
-            await this.container.client.application?.commands.create(contextCommand.options);
+            if (!applicationCommandsCache?.filter(x => x.name === contextCommand.name).size) {
+                // @ts-expect-error
+                await this.container.client.application?.commands.create(contextCommand.options);
+            }
             continue;
         }
     }
