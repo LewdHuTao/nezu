@@ -5,6 +5,7 @@ import { Client, MessageEmbed } from "discord.js";
 import { queueManager } from "../../managers/audio/queueManager";
 import { ShoukakuTrack } from "shoukaku";
 import { audioEmoji } from "../../utils/Constants";
+import { isStageChannel } from "@sapphire/discord.js-utilities";
 
 @ApplyOptions<ListenerOptions>({
     name: "trackStart",
@@ -22,6 +23,11 @@ export class clientListener extends Listener {
                     .setColor("LUMINOUS_VIVID_PINK")
             ]
         });
+        const voiceChannel = this.container.client.channels.cache.get(player.shoukakuPlayer.connection.channelId!);
+        if (isStageChannel(voiceChannel) && voiceChannel) {
+            if (voiceChannel.manageable && voiceChannel.guild.me?.voice.suppress) await voiceChannel.guild.me?.voice.setSuppressed(false);
+            if (!voiceChannel.manageable && voiceChannel.guild.me?.voice.suppress && !voiceChannel.guild.me?.voice.requestToSpeakTimestamp) await voiceChannel.guild.me?.voice.setRequestToSpeak(true);
+        }
         player.lastMessage = msg;
         this.container.client.logger.info(`${green("[Audio]")} ${magentaBright(`guildId ${player.textChannel.guildId} start playing track ${track.track}`)}`);
     }
