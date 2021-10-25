@@ -21,8 +21,13 @@
  - For user id, you can simply delete all playlist they have.
  - For guild id, you can simply kick the bot from the server.
 ## Bot Mission
- - Delivery good quality music bot without paying any money.
+ - Delivery good quality music bot.
  - Make it free, with no charge.
  - Easy to use.
  - Help from the community.
+
+## Terms Of Service
+ - You may not abuse all bug or glitch
+ - Use it properly
+
 ###### © KagChi 2021 All rights reserved.
