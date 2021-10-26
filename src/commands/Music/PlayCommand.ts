@@ -13,7 +13,6 @@ import { audioEmoji } from "../../utils/Constants";
 })
 
 export class clientCommand extends Command {
-    
     async messageRun(message: Message, args: Args) {
         const userArgument = await args.restResult("string");
         if (!userArgument) {
