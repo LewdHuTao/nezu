@@ -15,9 +15,9 @@ import { isHasSendPerm } from "../../utils/audioPermGuard";
 })
 export class clientListener extends Listener {
     async run(player: queueManager, track: ShoukakuTrack) {
-        if(!track) {
+        if (!track) {
             this.container.client.logger.warn(`${yellow("[Audio]")} ${magentaBright(`guildId ${player.textChannel.guildId} start playing ghost track. stopping now`)}`);
-            return player.shoukakuPlayer.stopTrack()
+            return player.shoukakuPlayer.stopTrack();
         };
         if (player.playerTimeout) clearTimeout(player.playerTimeout);
         if (player.lastMessage) player.lastMessage.delete().catch(() => undefined);
