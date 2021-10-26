@@ -33,7 +33,7 @@ export class Tidal extends Plugin {
             try {
                 const func = this.functions[type as keyof Tidal["functions"]];
                 const searchTrack: Result = await func(id);
-                const loadType = type === "music-video" ? "TRACK_LOADED" : "PLAYLIST_LOADED";
+                const loadType = type === "track" ? "TRACK_LOADED" : "PLAYLIST_LOADED";
                 const name = ["artist", "album", "playlist"].includes(type) ? searchTrack.name : null;
                 const trackResult = new ShoukakuTrackList({ loadType, playlistInfo: { name }, tracks: searchTrack.tracks });
                 if (trackResult && options?.requester && (trackResult.type === "TRACK" || trackResult.type === "PLAYLIST" || trackResult.type === "SEARCH")) {
