@@ -1,6 +1,6 @@
 import { Listener, ListenerOptions } from "@sapphire/framework";
 import { ApplyOptions } from "@sapphire/decorators";
-import { green, magentaBright } from "colorette";
+import { green, magentaBright, yellow } from "colorette";
 import { Client, MessageEmbed } from "discord.js";
 import { queueManager } from "../../managers/audio/queueManager";
 import { ShoukakuTrack } from "shoukaku";
@@ -15,6 +15,10 @@ import { isHasSendPerm } from "../../utils/audioPermGuard";
 })
 export class clientListener extends Listener {
     async run(player: queueManager, track: ShoukakuTrack) {
+        if(!track) {
+            this.container.client.logger.warn(`${yellow("[Audio]")} ${magentaBright(`guildId ${player.textChannel.guildId} start playing ghost track. stopping now`)}`);
+            return player.shoukakuPlayer.stopTrack()
+        };
         if (player.playerTimeout) clearTimeout(player.playerTimeout);
         if (player.lastMessage) player.lastMessage.delete().catch(() => undefined);
         if (!isHasSendPerm(player.textChannel)) return;
