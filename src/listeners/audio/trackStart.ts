@@ -17,7 +17,7 @@ export class clientListener extends Listener {
     async run(player: queueManager, track: ShoukakuTrack) {
         if (player.playerTimeout) clearTimeout(player.playerTimeout);
         if (player.lastMessage) player.lastMessage.delete().catch(() => undefined);
-        if(!isHasSendPerm(player.textChannel)) return;
+        if (!isHasSendPerm(player.textChannel)) return;
         const msg = await player.textChannel.send({
             embeds: [
                 new MessageEmbed()
