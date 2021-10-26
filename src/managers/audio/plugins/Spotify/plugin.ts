@@ -104,7 +104,7 @@ export class Spotify extends Plugin {
     }
 
     private async resolveTrack(query: string, options?: { requester?: User; source?: LavalinkSource }): Promise<ShoukakuTrackList | null> {
-        const [, type, id] = query.match(this.spotifyMatch) ?? [];
+        const [, type, id] = query?.match(this.spotifyMatch) ?? [];
         if (type in this.functions) {
             try {
                 const func = this.functions[type as keyof Spotify["functions"]];
