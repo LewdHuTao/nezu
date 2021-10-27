@@ -27,7 +27,8 @@ export class clientListener extends Listener {
         });
         player.lastMessage = msg;
         this.container.client.logger.info(`${green("[Audio]")} ${magentaBright(`guildId ${player.textChannel.guildId} queue ended`)}`);
-        if (player.stayInVc) return;
+        const isStayOnVc = await player.stayInVc();
+        if (isStayOnVc) return;
         player.playerTimeout = setTimeout(() => {
             player.shoukakuPlayer.connection.disconnect();
             /* eslint @typescript-eslint/no-empty-function: "off" */

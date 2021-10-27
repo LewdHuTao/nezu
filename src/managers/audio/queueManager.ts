@@ -18,8 +18,9 @@ export class queueManager {
         this.shoukakuPlayer.on("error", () => this.audioManager.emit("trackEnd", this, this.queueTrack.current));
     }
 
-    public get stayInVc() {
-        return this.audioManager.client.databases.guilds.cache.get(this.shoukakuPlayer.connection.guildId)?.stayInVc ?? false;
+    public async stayInVc() {
+        const guildSettings = await this.audioManager.client.databases.guilds.get(this.shoukakuPlayer.connection.guildId);
+        return guildSettings.stayInVc ?? false;
     }
 
     public playerTimeout: NodeJS.Timeout | undefined;
