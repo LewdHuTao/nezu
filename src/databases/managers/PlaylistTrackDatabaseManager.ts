@@ -25,7 +25,7 @@ export class PlaylistTrackDatabaseManager {
     public async getTrack(userId: Snowflake, playlistId: string) {
         if (this.cache.filter(x => x.userId === userId && x.playlistId === playlistId).size) return [...this.cache.filter(x => x.userId === userId && x.playlistId === playlistId).values()];
         const userTrack = await this.repository.find({ userId, playlistId });
-        for(const track of userTrack) {
+        for (const track of userTrack) {
             this.cache.set(track.trackId, track);
             continue;
         }
@@ -35,7 +35,7 @@ export class PlaylistTrackDatabaseManager {
     public async getSIngleTrack(userId: Snowflake, trackId: string) {
         if (this.cache.filter(x => x.userId === userId && x.trackId === trackId).size) return this.cache.filter(x => x.userId === userId && x.trackId === trackId).first();
         const userTrack = await this.repository.findOne({ userId, trackId });
-        if(userTrack) this.cache.set(userTrack.trackId, userTrack);
+        if (userTrack) this.cache.set(userTrack.trackId, userTrack);
         return userTrack;
     }
 
