@@ -32,7 +32,12 @@ export class PlaylistDatabaseManager {
 
     public async getUserPlaylist(userId: Snowflake) {
         if (this.cache.filter(x => x.userId === userId).size) return [...this.cache.filter(x => x.userId === userId).values()];
-        return this.repository.find({ userId });
+        const userPlaylist = await this.repository.find({ userId });
+        for (const playlist of userPlaylist) {
+            this.cache.set(playlist.playlistId, playlist);
+            continue;
+        }
+        return userPlaylist;
     }
 
     public async createPlaylist(userId: Snowflake, playlistName: string): Promise<PlaylistSetting> {
