@@ -32,16 +32,16 @@ export class clientCommand extends Command {
         const PageMessage = new PaginatedMessage({
             actions: [
                 {
-                    customId: '@sapphire/paginated-messages.firstPage',
-                    style: 'PRIMARY',
-                    emoji: '⏪',
+                    customId: "@sapphire/paginated-messages.firstPage",
+                    style: "PRIMARY",
+                    emoji: "⏪",
                     type: Constants.MessageComponentTypes.BUTTON,
                     run: ({ handler }) => (handler.index = 0)
                 },
                 {
-                    customId: '@sapphire/paginated-messages.previousPage',
-                    style: 'PRIMARY',
-                    emoji: '◀️',
+                    customId: "@sapphire/paginated-messages.previousPage",
+                    style: "PRIMARY",
+                    emoji: "◀️",
                     type: Constants.MessageComponentTypes.BUTTON,
                     run: ({ handler }) => {
                         if (handler.index === 0) handler.index = handler.pages.length - 1;
@@ -49,9 +49,9 @@ export class clientCommand extends Command {
                     }
                 },
                 {
-                    customId: '@sapphire/paginated-messages.nextPage',
-                    style: 'PRIMARY',
-                    emoji: '▶️',
+                    customId: "@sapphire/paginated-messages.nextPage",
+                    style: "PRIMARY",
+                    emoji: "▶️",
                     type: Constants.MessageComponentTypes.BUTTON,
                     run: ({ handler }) => {
                         if (handler.index === handler.pages.length - 1) handler.index = 0;
@@ -59,16 +59,16 @@ export class clientCommand extends Command {
                     }
                 },
                 {
-                    customId: '@sapphire/paginated-messages.goToLastPage',
-                    style: 'PRIMARY',
-                    emoji: '⏩',
+                    customId: "@sapphire/paginated-messages.goToLastPage",
+                    style: "PRIMARY",
+                    emoji: "⏩",
                     type: Constants.MessageComponentTypes.BUTTON,
                     run: ({ handler }) => (handler.index = handler.pages.length - 1)
                 },
                 {
-                    customId: '@sapphire/paginated-messages.stop',
-                    style: 'DANGER',
-                    emoji: '⏹️',
+                    customId: "@sapphire/paginated-messages.stop",
+                    style: "DANGER",
+                    emoji: "⏹️",
                     type: Constants.MessageComponentTypes.BUTTON,
                     run: async ({ collector, response }) => {
                         collector.stop();
@@ -79,12 +79,12 @@ export class clientCommand extends Command {
         });
         for (const page of pages) {
             PageMessage.addPageEmbed(embed => {
-                embed.setDescription(joinArray(page))
-                embed.setThumbnail(message.guild?.iconURL()!).setAuthor(message.guild?.name!, undefined, "https://nezukochan.tech")
+                embed.setDescription(joinArray(page));
+                embed.setThumbnail(message.guild?.iconURL()!).setAuthor(message.guild?.name!, undefined, "https://nezukochan.tech");
                 embed.setColor("LUMINOUS_VIVID_PINK");
                 return embed;
             });
         }
-        await PageMessage.run(message)
+        await PageMessage.run(message);
     }
 }
