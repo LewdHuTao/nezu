@@ -22,14 +22,21 @@ export class PlaylistTrackDatabaseManager {
         return createdTrack;
     }
 
-    public getTrack(userId: Snowflake, playlistId: string) {
+    public async getTrack(userId: Snowflake, playlistId: string) {
         if (this.cache.filter(x => x.userId === userId && x.playlistId === playlistId).size) return [...this.cache.filter(x => x.userId === userId && x.playlistId === playlistId).values()];
-        return this.repository.find({ userId, playlistId });
+        const userTrack = await this.repository.find({ userId, playlistId });
+        for(const track of userTrack) {
+            this.cache.set(track.trackId, track);
+            continue;
+        }
+        return userTrack;
     }
 
-    public getSIngleTrack(userId: Snowflake, trackId: string) {
+    public async getSIngleTrack(userId: Snowflake, trackId: string) {
         if (this.cache.filter(x => x.userId === userId && x.trackId === trackId).size) return this.cache.filter(x => x.userId === userId && x.trackId === trackId).first();
-        return this.repository.findOne({ userId, trackId });
+        const userTrack = await this.repository.findOne({ userId, trackId });
+        if(userTrack) this.cache.set(userTrack.trackId, userTrack);
+        return userTrack;
     }
 
     public async delete(userId: Snowflake, trackId: string) {
