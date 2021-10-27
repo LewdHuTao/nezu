@@ -18,7 +18,7 @@ export class clientListener extends Listener {
         if (!track) {
             this.container.client.logger.warn(`${yellow("[Audio]")} ${magentaBright(`guildId ${player.textChannel.guildId} start playing ghost track. stopping now`)}`);
             return player.shoukakuPlayer.stopTrack();
-        };
+        }
         if (player.playerTimeout) clearTimeout(player.playerTimeout);
         if (player.lastMessage) player.lastMessage.delete().catch(() => undefined);
         if (!isHasSendPerm(player.textChannel)) return;
