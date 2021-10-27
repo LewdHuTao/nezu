@@ -11,6 +11,10 @@ export class clientListener extends Listener {
             const contextCommand = this.container.stores.get("contextCommands").get(interaction.commandName);
             if (!contextCommand) return;
             await contextCommand.messageRun(interaction);
+        } else if (interaction.isCommand() && interaction.inGuild()) {
+            const contextCommand = this.container.stores.get("slashCommands").get(interaction.commandName);
+            if (!contextCommand) return;
+            await contextCommand.messageRun(interaction);
         }
     }
 }

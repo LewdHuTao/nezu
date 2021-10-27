@@ -7,6 +7,7 @@ import { GuildDatabaseManager } from "../databases/managers/GuildDatabaseManager
 import { PlaylistDatabaseManager } from "../databases/managers/PlaylistDatabaseManager";
 import { PlaylistTrackDatabaseManager } from "../databases/managers/PlaylistTrackDatabaseManager";
 import { ContextCommandStore } from "../libs/contexies/ContextCommandStore";
+import { SlashCommandStore } from "../libs/slashies/SlashCommandStore";
 import { audioManager } from "../managers/audio/audioManager";
 import { AppleMusic } from "../managers/audio/plugins/AppleMusic";
 import { Bilibili } from "../managers/audio/plugins/Bilibili";
@@ -68,6 +69,7 @@ class NezuClient extends SapphireClient {
             loadDefaultErrorListeners: false,
             intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_VOICE_STATES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS]
         });
+        this.stores.register(new SlashCommandStore());
         this.stores.register(new ContextCommandStore());
     }
 }

@@ -1,6 +1,7 @@
 import { Snowflake } from "discord.js";
 import { NodeOptions } from "shoukaku/types";
 import { ContextCommandStore } from "../libs/contexies/ContextCommandStore";
+import { SlashCommandStore } from "../libs/slashies/SlashCommandStore";
 
 export interface configType {
     bot: {
@@ -34,5 +35,6 @@ export interface jsonWeebyFormatText {
 declare module "@sapphire/framework" {
     interface StoreRegistryEntries {
         contextCommands: ContextCommandStore;
+        slashCommands: SlashCommandStore;
     }
 }
