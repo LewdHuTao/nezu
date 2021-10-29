@@ -17,7 +17,7 @@
     "compile": "tsc"
   },
   "dependencies": {
-    "@discordjs/builders": "0.7.0",
+    "@discordjs/builders": "0.8.1",
     "@keyvhq/core": "1.6.0",
     "@keyvhq/redis": "1.6.1",
     "@sapphire/decorators": "3.1.3",
